@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Quartz" />
+    <None Remove="Jobs\" />
+    <None Remove="Quartz.Serialization.Json" />
+    <None Remove="Database Scripts\" />
+    <None Remove="Factories\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Quartz" Version="3.3.2" />
+    <PackageReference Include="Quartz.Serialization.Json" Version="3.3.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Jobs\" />
+    <Folder Include="Database Scripts\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\notifyme.shared\notifyme.shared.csproj" />
+  </ItemGroup>
+</Project>

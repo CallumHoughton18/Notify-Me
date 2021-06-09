@@ -1,0 +1,31 @@
+﻿@page "/"
+@using notifyme.shared.ViewModels
+@using notifyme.server.Components
+@inject CreateNewNotificationViewModel _vm  
+@inherits BaseMVVMComponent
+<h3>Manage Reminders</h3>
+<EditForm Model="@_vm.NewNotification" OnValidSubmit="@HandleSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <InputText id="title" @bind-Value="_vm.NewNotification.NotificationTitle" />
+    <InputText id="body" @bind-Value="_vm.NewNotification.NotificationBody" />
+    <button type="submit">Submit</button>
+</EditForm>
+
+@if (_vm.SavedNotificationSubscription is null && _vm.IsInitialized)
+{
+    <button @onclick="_vm.SetAndSaveNotificationSubscription">Add Notifications!</button>
+}
+@code {
+
+    protected override Task OnInitializedAsync()
+    {
+        BindViewModelToLifeCycle(_vm);
+        return base.OnInitializedAsync();
+    }
+    
+    private void HandleSubmit()
+    {
+        _vm.SaveNotification();
+    }
+}

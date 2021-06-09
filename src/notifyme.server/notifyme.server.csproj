@@ -1,0 +1,75 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\img\" />
+    <Content Remove="wwwroot\js\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\img\" />
+    <Folder Include="Scripts\" />
+    <Folder Include="wwwroot\js\" />
+    <Folder Include="Services\" />
+    <Folder Include="Data Stores\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Scripts\" />
+    <None Remove="Microsoft.TypeScript.MSBuild" />
+    <None Remove="Services\" />
+    <None Remove="Microsoft.EntityFrameworkCore" />
+    <None Remove="Microsoft.EntityFrameworkCore.Sqlite" />
+    <None Remove="Quartz" />
+    <None Remove="Quartz.Serialization.Json" />
+    <None Remove="Quartz.AspNetCore" />
+    <None Remove="Data Stores\" />
+    <None Remove="Quartz.Extensions.DependencyInjection" />
+    <None Remove="Data Stores\jobstore.db" />
+    <None Remove="System.Data.SQLite" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.6">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.3.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.6" />
+    <PackageReference Include="Quartz" Version="3.3.2" />
+    <PackageReference Include="Quartz.Serialization.Json" Version="3.3.2" />
+    <PackageReference Include="Quartz.AspNetCore" Version="3.3.2" />
+    <PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.3.2" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.114.3" />
+    <PackageReference Include="WebPush" Version="1.0.11" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\test.ts" />
+    <None Include="Scripts\PushNotifications.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\notifyme.shared\notifyme.shared.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\notifyme.infrastructure\notifyme.infrastructure.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\notifyme.scheduler\notifyme.scheduler.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Data Stores\jobstore.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Data Stores\jobstore.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+</Project>
