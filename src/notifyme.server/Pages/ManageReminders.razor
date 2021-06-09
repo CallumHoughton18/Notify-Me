@@ -4,11 +4,11 @@
 @inject CreateNewNotificationViewModel _vm  
 @inherits BaseMVVMComponent
 <h3>Manage Reminders</h3>
-<EditForm Model="@_vm.NewNotification" OnValidSubmit="@HandleSubmit">
+<EditForm Model="@_vm" OnValidSubmit="@HandleSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
-    <InputText id="title" @bind-Value="_vm.NewNotification.NotificationTitle" />
-    <InputText id="body" @bind-Value="_vm.NewNotification.NotificationBody" />
+    <InputText id="title" @bind-Value="_vm.NotificationTitle" />
+    <InputText id="body" @bind-Value="_vm.NotificationBody" />
     <button type="submit">Submit</button>
 </EditForm>
 

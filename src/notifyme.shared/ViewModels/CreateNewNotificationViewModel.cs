@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using notifyme.shared.RepositoryInterfaces;
 using notifyme.shared.ServiceInterfaces;
@@ -30,19 +31,17 @@ namespace notifyme.shared.ViewModels
             _notificationRepository = notificationRepository;
         }
 
-        private Notification _newNotification = new();
-        public Notification NewNotification
-        {
-            get => _newNotification;
-            set => SetValue(ref _newNotification, value);
-        }
-
         private SavedNotificationSubscription _savedNotificationSubscription;
         public SavedNotificationSubscription SavedNotificationSubscription
         {
             get => _savedNotificationSubscription;
             set => SetValue(ref _savedNotificationSubscription, value);
-        }       
+        }     
+        
+        [Required]
+        public string NotificationBody { get; set; }
+        [Required]
+        public string NotificationTitle { get; set; }
 
         public async Task SetAndSaveNotificationSubscription()
         {
@@ -63,14 +62,14 @@ namespace notifyme.shared.ViewModels
 
         public async Task SaveNotification()
         {
-            Console.WriteLine("Saving notification...");
-            var newNotification = new Notification()
+            Notification newNotification = new Notification()
             {
+                NotificationTitle = NotificationTitle,
+                NotificationBody = NotificationBody,
                 UserName = _currentUser.UserName,
-                NotificationBody = NewNotification.NotificationBody,
-                NotificationTitle = NewNotification.NotificationTitle
+                CronJobString = ""
             };
-
+            Console.WriteLine("Saving notification...");
             await _notificationRepository.AddOrUpdateAsync(newNotification);
             await _notificationScheduler.ScheduleNotificationAsync(newNotification);
         }
