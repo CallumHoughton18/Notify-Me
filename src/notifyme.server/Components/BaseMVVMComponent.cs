@@ -17,7 +17,7 @@ namespace notifyme.server.Components
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (firstRender)
+            if (firstRender && _vm != null)
             {
                 _vm.PropertyChanged += OnVmOnPropertyChanged;
                 await _vm.InitializeAsync();

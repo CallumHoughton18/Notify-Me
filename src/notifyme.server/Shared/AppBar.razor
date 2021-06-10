@@ -1,0 +1,12 @@
+@using MudBlazor.Extensions
+<MudAppBar Elevation="1">
+    <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="OnDrawButtonClick" />
+    <MudText Typo="Typo.h5" Class="ml-3">NotifyMe</MudText>
+    <MudAppBarSpacer />
+    <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End" />
+</MudAppBar>
+
+@code {
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnDrawButtonClick { get; set; }
+}

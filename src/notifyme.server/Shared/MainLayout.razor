@@ -1,17 +1,18 @@
 ﻿@inherits LayoutComponentBase
+<MudThemeProvider />
+<MudLayout>
+    <AppBar OnDrawButtonClick="DrawerToggle"></AppBar>
+    <AppNavigationDraws DrawerOpen="DrawerOpen"></AppNavigationDraws>
+    <MudMainContent Class="pt-16 px-16">
+        @Body
+    </MudMainContent>
+</MudLayout>
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+@code {
+    public bool DrawerOpen { get; set; } = true;
+    void DrawerToggle()
+    {
+        DrawerOpen = !DrawerOpen;
+    }
 
-    <div class="main">
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
-
-        <div class="content px-4">
-            @Body
-        </div>
-    </div>
-</div>
+}

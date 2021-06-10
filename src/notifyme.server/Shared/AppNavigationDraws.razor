@@ -1,0 +1,14 @@
+<MudDrawer @bind-Open="DrawerOpen" ClipMode="DrawerClipMode.Always" Elevation="1" Style="font-size: medium">
+    <MudNavMenu>
+        <MudNavLink Href="/" Match="NavLinkMatch.All">Record Quick Reminder</MudNavLink>
+        <MudNavLink Href="/counter" Match="NavLinkMatch.All">Counter</MudNavLink>
+        <MudNavLink Href="/test" Match="NavLinkMatch.All" >Test</MudNavLink>
+    </MudNavMenu>
+</MudDrawer>
+@code {
+        [Parameter]
+        public bool DrawerOpen { get; set; }
+
+        [Parameter]
+        public string DrawerClass { get; set; }     
+}

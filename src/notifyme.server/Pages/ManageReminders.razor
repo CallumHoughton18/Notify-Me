@@ -3,13 +3,23 @@
 @using notifyme.server.Components
 @inject CreateNewNotificationViewModel _vm  
 @inherits BaseMVVMComponent
-<h3>Manage Reminders</h3>
+
+<MudText Typo="Typo.h3">Manage Reminders</MudText>
+
 <EditForm Model="@_vm" OnValidSubmit="@HandleSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
-    <InputText id="title" @bind-Value="_vm.NotificationTitle" />
-    <InputText id="body" @bind-Value="_vm.NotificationBody" />
-    <button type="submit">Submit</button>
+    <MudTextField Label="Notification Title" @bind-Value="_vm.NotificationTitle" For="@(() => _vm.NotificationTitle)" />
+    <MudTextField Label="Notification Body" @bind-Value="_vm.NotificationBody" For="@(() => _vm.NotificationBody)" />
+    <MudNumericField Label="Time" @bind-Value="IntValue" Variant="Variant.Text" Max="100"/>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string" Label="Time Format" Strict="true" Variant="Variant.Outlined">
+                <MudSelectItem T="string" Value="@("Minutes")"/>
+                <MudSelectItem T="string" Value="@("Hours")"/>
+                <MudSelectItem T="string" Value="@("Days")"/>
+            </MudSelect>
+        </MudItem>
+    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mt-5">Submit</MudButton>
 </EditForm>
 
 @if (_vm.SavedNotificationSubscription is null && _vm.IsInitialized)
@@ -17,7 +27,7 @@
     <button @onclick="_vm.SetAndSaveNotificationSubscription">Add Notifications!</button>
 }
 @code {
-
+    public int IntValue { get; set; }
     protected override Task OnInitializedAsync()
     {
         BindViewModelToLifeCycle(_vm);
