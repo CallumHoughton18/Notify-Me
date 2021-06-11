@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using notifyme.shared.RepositoryInterfaces;
 using notifyme.shared.ServiceInterfaces;
 using System.Linq;
+using notifyme.shared.Models;
 using notifyme.shared.Models.DataStore_Models;
 
 namespace notifyme.shared.ViewModels
@@ -36,42 +37,30 @@ namespace notifyme.shared.ViewModels
         {
             get => _savedNotificationSubscription;
             set => SetValue(ref _savedNotificationSubscription, value);
-        }     
-        
-        [Required]
-        public string NotificationBody { get; set; }
-        [Required]
-        public string NotificationTitle { get; set; }
-
-        public async Task SetAndSaveNotificationSubscription()
-        {
-             await _pushNotificationSubscriberService.RegisterSubscription();
-             var currentSub = await _pushNotificationSubscriberService.GetCurrentUserAndDeviceSubscription();
-             if (currentSub is null) return;
-             
-             var newNotificationSubscription = new SavedNotificationSubscription()
-             {
-                 UserName = _currentUser.UserName,
-                 AuthKey = currentSub.AuthKey,
-                 EndPoint = currentSub.EndPoint,
-                 P256HKey = currentSub.P256hKey,
-             };
-             
-             SavedNotificationSubscription = await _savedNotificationSubscriptionRepository.AddOrUpdateAsync(newNotificationSubscription);
         }
 
+        private QuickNotification _quickNotification = new();
+        public QuickNotification QuickNotification
+        {
+            get => _quickNotification;
+            set => SetValue(ref _quickNotification, value);
+        }
+        
         public async Task SaveNotification()
         {
+            IsLoading.SetNewValues(true, "Saving Notification...");
             Notification newNotification = new Notification()
             {
-                NotificationTitle = NotificationTitle,
-                NotificationBody = NotificationBody,
+                NotificationTitle = QuickNotification.Title,
+                NotificationBody = QuickNotification.Body,
                 UserName = _currentUser.UserName,
                 CronJobString = ""
             };
             Console.WriteLine("Saving notification...");
             await _notificationRepository.AddOrUpdateAsync(newNotification);
             await _notificationScheduler.ScheduleNotificationAsync(newNotification);
+            IsLoading.SetNewValues(false);
+
         }
         
         public override async Task InitializeAsync()

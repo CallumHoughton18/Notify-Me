@@ -1,41 +1,32 @@
 ﻿@page "/"
 @using notifyme.shared.ViewModels
 @using notifyme.server.Components
-@inject CreateNewNotificationViewModel _vm  
+@using notifyme.server.Shared.Manage_Notifications
+@using notifyme.server.Shared.Manage_Subscriptions
+@inject CreateNewNotificationViewModel _createNotifVm;  
+@inject RegisterNotificationSubscriptionViewModel _subToNotifVm;
 @inherits BaseMVVMComponent
 
-<MudText Typo="Typo.h3">Manage Reminders</MudText>
+<LoadingOverlay IsLoadingState="@_createNotifVm.IsLoading"></LoadingOverlay>
 
-<EditForm Model="@_vm" OnValidSubmit="@HandleSubmit">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-    <MudTextField Label="Notification Title" @bind-Value="_vm.NotificationTitle" For="@(() => _vm.NotificationTitle)" />
-    <MudTextField Label="Notification Body" @bind-Value="_vm.NotificationBody" For="@(() => _vm.NotificationBody)" />
-    <MudNumericField Label="Time" @bind-Value="IntValue" Variant="Variant.Text" Max="100"/>
-        <MudItem xs="12" sm="6" md="4">
-            <MudSelect T="string" Label="Time Format" Strict="true" Variant="Variant.Outlined">
-                <MudSelectItem T="string" Value="@("Minutes")"/>
-                <MudSelectItem T="string" Value="@("Hours")"/>
-                <MudSelectItem T="string" Value="@("Days")"/>
-            </MudSelect>
-        </MudItem>
-    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mt-5">Submit</MudButton>
-</EditForm>
+<div style="width: 100%">
+    <MudPaper Class="pa-8 mt-5">
+        <AddNotificationForm NewNotification="@_createNotifVm.QuickNotification" OnSubmit="@HandleSubmit" ></AddNotificationForm>
+    </MudPaper>
+</div>
 
-@if (_vm.SavedNotificationSubscription is null && _vm.IsInitialized)
-{
-    <button @onclick="_vm.SetAndSaveNotificationSubscription">Add Notifications!</button>
-}
+<AddSubscription ViewModel="@_subToNotifVm"></AddSubscription>
+
+
 @code {
-    public int IntValue { get; set; }
     protected override Task OnInitializedAsync()
     {
-        BindViewModelToLifeCycle(_vm);
+        BindViewModelToLifeCycle(_createNotifVm);
         return base.OnInitializedAsync();
     }
     
     private void HandleSubmit()
     {
-        _vm.SaveNotification();
+        _createNotifVm.SaveNotification();
     }
 }

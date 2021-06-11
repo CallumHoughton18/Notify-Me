@@ -20,6 +20,7 @@ namespace notifyme.server.Components
             if (firstRender && _vm != null)
             {
                 _vm.PropertyChanged += OnVmOnPropertyChanged;
+                _vm.IsLoading.PropertyChanged += OnVmOnPropertyChanged;
                 await _vm.InitializeAsync();
             }
             await base.OnAfterRenderAsync(firstRender);

@@ -40,7 +40,8 @@ namespace notifyme.server
             services.AddServerSideBlazor();
             services.AddMudServices();
             services.AddSingleton<WeatherForecastService>();
-            services.AddTransient<CreateNewNotificationViewModel>();
+            services.AddScoped<CreateNewNotificationViewModel>();
+            services.AddScoped<RegisterNotificationSubscriptionViewModel>();
             services.AddTransient<IPushNotificationSubscriberService, PushNotificationSubscriberService>();
             services.AddDbContextFactory<NotifyMeContext>(opt => opt.UseSqlite($"Data Source={nameof(NotifyMeContext.DB_NAME)}.db"));
             services.AddScoped<IUserRepository, UserRepository>();

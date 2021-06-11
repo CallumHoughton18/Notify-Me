@@ -1,0 +1,13 @@
+@using notifyme.shared.Helpers
+
+<MudOverlay Visible="IsLoadingState.ReturnBool" DarkBackground="true" ZIndex="9999" AutoClose="true">
+    <MudPaper Class="d-flex flex-column justify-center align-center pa-16">
+        <MudProgressCircular Color="Color.Secondary" Indeterminate="true" Class="flex-grow-1 mb-10"/>
+        <MudText Typo="Typo.body1">@IsLoadingState.ReturnString</MudText>
+    </MudPaper>
+</MudOverlay>
+        
+@code {
+    [Parameter]
+    public ReturnMessage IsLoadingState { get; set; }
+}

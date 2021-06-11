@@ -2,16 +2,17 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using notifyme.shared.Helpers;
 
 namespace notifyme.shared.ViewModels
 {
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
-        private bool _isBusy = false;
-        public bool IsBusy
+        private ReturnMessage _isLoading = new ReturnMessage(false, "");
+        public ReturnMessage IsLoading
         {
-            get => _isBusy;
-            set => SetValue(ref _isBusy, value);
+            get => _isLoading;
+            set => SetValue(ref _isLoading, value);
         }
 
         private bool _isInitialized = false;

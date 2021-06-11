@@ -1,0 +1,24 @@
+@using notifyme.shared.ViewModels
+@inherits notifyme.server.Components.BaseMVVMComponent
+
+@if (ViewModel.IsInitialized && !ViewModel.IsDeviceRegistered)
+{
+    <MudFab Icon="@Icons.Material.Filled.AddAlert" Label="Register" Color="Color.Secondary"  
+            Style="position:fixed; bottom:1rem;right:1rem" OnClick="HandleSubmit"   />
+}
+
+@code {
+    [Parameter]
+    public RegisterNotificationSubscriptionViewModel ViewModel { get; set; }
+    
+    protected override Task OnInitializedAsync()
+    {
+        BindViewModelToLifeCycle(ViewModel);
+        return base.OnInitializedAsync();
+    }
+    
+    private void HandleSubmit()
+    {
+        ViewModel.SetAndSaveNotificationSubscription();
+    }
+}

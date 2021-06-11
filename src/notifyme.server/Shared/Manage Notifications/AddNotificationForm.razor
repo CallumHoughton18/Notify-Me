@@ -1,0 +1,29 @@
+@using Microsoft.AspNetCore.Components
+@using notifyme.shared
+@using notifyme.shared.Models
+
+<MudText Typo="Typo.h6">Add Quick Reminder</MudText>
+<EditForm Model="@NewNotification" OnValidSubmit="@OnSubmit">
+    <MudTextField Label="Notification Title" @bind-Value="NewNotification.Title" For="@(() => NewNotification.Title)" Class="mb-2" />
+    <MudTextField Label="Notification Body" @bind-Value="NewNotification.Body" For="@(() => NewNotification.Body)" Class="mb-2"  />
+    <MudNumericField Label="Time" @bind-Value="NewNotification.RequestedTime" Variant="Variant.Text" For="@(() => NewNotification.RequestedTime)" Class="mb-2"  />
+        <MudItem xs="12" sm="6" md="4" Class="mb-2">
+            <MudSelect T="NotifyMeEnums.QuickNotificationTimeFormat" Label="Time Format" Strict="true" Variant="Variant.Outlined" ToStringFunc="@_converter">
+                @{ var timeFormats = Enum.GetValues<NotifyMeEnums.QuickNotificationTimeFormat>();}
+                @foreach (var timeFormat in timeFormats)
+                {
+                    <MudSelectItem Value="@(timeFormat)"/>
+                }
+            </MudSelect>
+        </MudItem>
+    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mt-5">Submit</MudButton>
+</EditForm>
+@code {
+    readonly Func<NotifyMeEnums.QuickNotificationTimeFormat, string> _converter = t => Enum.GetName(typeof(NotifyMeEnums.QuickNotificationTimeFormat), t);
+
+    [Parameter]
+    public QuickNotification NewNotification { get; set; }
+    
+    [Parameter]
+    public EventCallback<EditContext> OnSubmit { get; set; }
+}
