@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "notifyme.infrastructure", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "notifyme.scheduler", "notifyme.scheduler\notifyme.scheduler.csproj", "{696375DF-2809-484C-82F3-52880294073D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2A9F0623-3DF6-429F-9D65-D262BDE4D491}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "notifyme.server.tests", "notifyme.server.tests\notifyme.server.tests.csproj", "{C8631C82-4DCB-4514-AA5A-7C7267AE1635}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,11 +37,18 @@ Global
 		{696375DF-2809-484C-82F3-52880294073D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{696375DF-2809-484C-82F3-52880294073D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{696375DF-2809-484C-82F3-52880294073D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8631C82-4DCB-4514-AA5A-7C7267AE1635}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8631C82-4DCB-4514-AA5A-7C7267AE1635}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8631C82-4DCB-4514-AA5A-7C7267AE1635}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8631C82-4DCB-4514-AA5A-7C7267AE1635}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8B2196D4-6956-4F43-A4D8-CEDDD3056D16}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C8631C82-4DCB-4514-AA5A-7C7267AE1635} = {2A9F0623-3DF6-429F-9D65-D262BDE4D491}
 	EndGlobalSection
 EndGlobal
