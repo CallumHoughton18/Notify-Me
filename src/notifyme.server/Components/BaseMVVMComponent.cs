@@ -33,17 +33,16 @@ namespace notifyme.server.Components
         
         public void Dispose()
         {
-            GC.SuppressFinalize(this);
             if (_vm is null) return;
             _vm.PropertyChanged -= OnVmOnPropertyChanged;
+            GC.SuppressFinalize(this);
         }
 
         public ValueTask DisposeAsync()
         {
+            _vm.PropertyChanged -= OnVmOnPropertyChanged;
             GC.SuppressFinalize(this);
-            return _vm is null ? 
-                ValueTask.CompletedTask : 
-                new ValueTask(new Task(() => _vm.PropertyChanged -= OnVmOnPropertyChanged));
+            return ValueTask.CompletedTask;
         }
     }
 }

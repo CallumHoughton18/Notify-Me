@@ -7,15 +7,11 @@
 @inject RegisterNotificationSubscriptionViewModel _subToNotifVm;
 @inherits BaseMVVMComponent
 
-<LoadingOverlay IsLoadingState="@_createNotifVm.IsLoading"></LoadingOverlay>
-
 <div style="width: 100%">
     <MudPaper Class="pa-8 mt-5">
         <AddNotificationForm NewNotification="@_createNotifVm.QuickNotification" OnSubmit="@HandleSubmit" ></AddNotificationForm>
     </MudPaper>
 </div>
-
-<AddSubscription ViewModel="@_subToNotifVm"></AddSubscription>
 
 
 @code {

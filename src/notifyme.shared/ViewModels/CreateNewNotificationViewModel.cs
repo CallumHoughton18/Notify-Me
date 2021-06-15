@@ -72,7 +72,7 @@ namespace notifyme.shared.ViewModels
             _currentUser = users[0];
             var savedSubs = await _savedNotificationSubscriptionRepository.ListAllAsync();
             
-            SavedNotificationSubscription = savedSubs.First();
+            //SavedNotificationSubscription = savedSubs.FirstOrDefault();
             await base.InitializeAsync();
         }
     }
