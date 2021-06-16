@@ -10,17 +10,19 @@ namespace notifyme.scheduler.Jobs
     public class SendPushNotificationJob : IJob
     {
         private readonly INotificationRepository _notificationRepository;
+        private readonly ISavedNotificationSubscriptionRepository _subscriptionRepository;
         private readonly IPushNotificationPusherService _pushNotificationPusherService;
         private readonly VapidDetails _vapidDetails;
-        private readonly IUserRepository _userRepository;
 
 
-        public SendPushNotificationJob(INotificationRepository notificationRepository,IPushNotificationPusherService pushNotificationPusherService, VapidDetails vapidDetails, IUserRepository userRepository)
+        public SendPushNotificationJob(INotificationRepository notificationRepository,
+            ISavedNotificationSubscriptionRepository subscriptionRepository,
+            IPushNotificationPusherService pushNotificationPusherService, VapidDetails vapidDetails)
         {
             _notificationRepository = notificationRepository;
+            _subscriptionRepository = subscriptionRepository;
             _pushNotificationPusherService = pushNotificationPusherService;
             _vapidDetails = vapidDetails;
-            _userRepository = userRepository;
         }
 
         public async Task Execute(IJobExecutionContext context)
@@ -29,11 +31,12 @@ namespace notifyme.scheduler.Jobs
             if (Guid.TryParse(context.JobDetail.Key.Name, out var notificationGuid))
             {
                 var notification = await _notificationRepository.GetByNotificationId(notificationGuid);
-                var user = await _userRepository.GetByUserName(notification.UserName);
-                foreach (var sub in user.SavedNotificationSubscriptions)
+                var savedSubscriptions = await _subscriptionRepository.GetByUserName(notification.UserName);
+                foreach (var sub in savedSubscriptions)
                 {
                     _pushNotificationPusherService.SendPushNotification(sub, notification, _vapidDetails);
                 }
+
                 Console.WriteLine(notification.NotificationTitle);
             }
         }

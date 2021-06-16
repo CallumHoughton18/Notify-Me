@@ -1,14 +1,27 @@
+@using Microsoft.AspNetCore.Identity
+
+
 <MudDrawer @bind-Open="DrawerOpen" ClipMode="DrawerClipMode.Always" Elevation="1" Style="font-size: medium">
+    <MudDrawerHeader>
+        <MudText Typo="Typo.h5">@UserName</MudText>
+    </MudDrawerHeader>
     <MudNavMenu>
         <MudNavLink Href="/" Match="NavLinkMatch.All">Record Quick Reminder</MudNavLink>
         <MudNavLink Href="/counter" Match="NavLinkMatch.All">Counter</MudNavLink>
-        <MudNavLink Href="/test" Match="NavLinkMatch.All" >Test</MudNavLink>
+        <MudNavLink Href="/test" Match="NavLinkMatch.All">Test</MudNavLink>
     </MudNavMenu>
 </MudDrawer>
-@code {
-        [Parameter]
-        public bool DrawerOpen { get; set; }
 
-        [Parameter]
-        public string DrawerClass { get; set; }     
+
+@code {
+
+    [Parameter]
+    public bool DrawerOpen { get; set; }
+
+    [Parameter]
+    public string DrawerClass { get; set; }
+
+    [Parameter]
+    public string UserName { get; set; }
+
 }

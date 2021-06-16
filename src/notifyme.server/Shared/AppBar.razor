@@ -1,12 +1,26 @@
 @using MudBlazor.Extensions
+@using notifyme.infrastructure.Identity
+@using Microsoft.AspNetCore.Identity
+
 <MudAppBar Elevation="1">
-    <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="OnDrawButtonClick" />
+    <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="OnDrawButtonClick"/>
     <MudText Typo="Typo.h5" Class="ml-3">NotifyMe</MudText>
-    <MudAppBarSpacer />
-    <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End" />
+    <MudAppBarSpacer/>
+    <AuthorizeView>
+        <Authorized>
+            <form method="post" action="Identity/Account/LogOut">
+                <MudIconButton Icon="@Icons.Material.Filled.Logout" Class="pr-3" 
+                               Color="Color.Inherit" ButtonType="ButtonType.Submit">
+                    
+                </MudIconButton>
+            </form>
+        </Authorized>
+    </AuthorizeView>
 </MudAppBar>
 
 @code {
+
     [Parameter]
     public EventCallback<MouseEventArgs> OnDrawButtonClick { get; set; }
+
 }

@@ -1,8 +1,15 @@
 ﻿@inherits LayoutComponentBase
-<MudThemeProvider />
+<MudThemeProvider/>
 <MudLayout>
     <AppBar OnDrawButtonClick="DrawerToggle"></AppBar>
-    <AppNavigationDraws DrawerOpen="DrawerOpen"></AppNavigationDraws>
+    <AuthorizeView>
+        <Authorized>
+            <AppNavigationDraws DrawerOpen="DrawerOpen" UserName="@context.User.Identity.Name"></AppNavigationDraws>
+        </Authorized>
+        <NotAuthorized>
+            <RedirectToLogin></RedirectToLogin>
+        </NotAuthorized>
+    </AuthorizeView>
     <MudMainContent Class="pt-16 px-16">
         @Body
     </MudMainContent>
@@ -10,6 +17,7 @@
 
 @code {
     public bool DrawerOpen { get; set; } = true;
+
     void DrawerToggle()
     {
         DrawerOpen = !DrawerOpen;

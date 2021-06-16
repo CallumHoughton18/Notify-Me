@@ -9,6 +9,7 @@
     <Content Remove="wwwroot\js\" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas" />
     <Folder Include="wwwroot\img\" />
     <Folder Include="Scripts\" />
     <Folder Include="wwwroot\js\" />
@@ -26,11 +27,17 @@
     <None Remove="Quartz.AspNetCore" />
     <None Remove="Data Stores\" />
     <None Remove="Quartz.Extensions.DependencyInjection" />
-    <None Remove="Data Stores\jobstore.db" />
     <None Remove="System.Data.SQLite" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.6">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.6">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -40,6 +47,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.6" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="MudBlazor" Version="5.0.11" />
     <PackageReference Include="Quartz" Version="3.3.2" />
     <PackageReference Include="Quartz.Serialization.Json" Version="3.3.2" />
@@ -67,11 +75,6 @@
     <None Update="Data Stores\jobstore.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Data Stores\jobstore.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\css\bootstrap\bootstrap.min.css" />

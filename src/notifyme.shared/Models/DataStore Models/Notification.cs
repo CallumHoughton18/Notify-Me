@@ -11,7 +11,6 @@ namespace notifyme.shared.Models.DataStore_Models
         public Guid NotificationId { get; set; }
         [Required]
         public string UserName { get; set; }
-        public User User { get; set; }
         [Required]
         [StringLength(10, ErrorMessage = "Name is too long.")]
         public string NotificationTitle { get; set; }

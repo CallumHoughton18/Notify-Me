@@ -12,31 +12,19 @@ namespace notifyme.shared.ViewModels
     public class CreateNewNotificationViewModel : BaseViewModel
     {
         private readonly IPushNotificationSubscriberService _pushNotificationSubscriberService;
-        private readonly IUserRepository _userRepository;
-        private readonly ISavedNotificationSubscriptionRepository _savedNotificationSubscriptionRepository;
         private readonly INotificationSchedulerInterface _notificationScheduler;
         private readonly INotificationRepository _notificationRepository;
-
-        private User _currentUser;
+        private readonly IAuthService _authService;
+        
         public CreateNewNotificationViewModel(
             IPushNotificationSubscriberService pushNotificationSubscriberService, 
-            IUserRepository userRepository,
-            ISavedNotificationSubscriptionRepository savedNotificationSubscriptionRepository, 
             INotificationSchedulerInterface notificationScheduler, 
-            INotificationRepository notificationRepository)
+            INotificationRepository notificationRepository, IAuthService authService)
         {
             _pushNotificationSubscriberService = pushNotificationSubscriberService;
-            _userRepository = userRepository;
-            _savedNotificationSubscriptionRepository = savedNotificationSubscriptionRepository;
             _notificationScheduler = notificationScheduler;
             _notificationRepository = notificationRepository;
-        }
-
-        private SavedNotificationSubscription _savedNotificationSubscription;
-        public SavedNotificationSubscription SavedNotificationSubscription
-        {
-            get => _savedNotificationSubscription;
-            set => SetValue(ref _savedNotificationSubscription, value);
+            _authService = authService;
         }
 
         private QuickNotification _quickNotification = new();
@@ -49,11 +37,13 @@ namespace notifyme.shared.ViewModels
         public async Task SaveNotification()
         {
             IsLoading.SetNewValues(true, "Saving Notification...");
+            var currentUser = await _authService.GetCurrentUserAsync();
+            
             Notification newNotification = new Notification()
             {
                 NotificationTitle = QuickNotification.Title,
                 NotificationBody = QuickNotification.Body,
-                UserName = _currentUser.UserName,
+                UserName = currentUser.UserName,
                 CronJobString = ""
             };
             Console.WriteLine("Saving notification...");
@@ -67,12 +57,6 @@ namespace notifyme.shared.ViewModels
         {
             await _pushNotificationSubscriberService.Initialize();
             await _notificationScheduler.InitializeAsync();
-            await _userRepository.AddOrUpdateAsync(new() { UserName = "Admin" });
-            var users = await _userRepository.ListAllAsync();
-            _currentUser = users[0];
-            var savedSubs = await _savedNotificationSubscriptionRepository.ListAllAsync();
-            
-            //SavedNotificationSubscription = savedSubs.FirstOrDefault();
             await base.InitializeAsync();
         }
     }

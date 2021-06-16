@@ -2,17 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MudBlazor.Services;
 using notifyme.infrastructure.Data;
+using notifyme.infrastructure.Identity;
 using notifyme.scheduler;
 using notifyme.scheduler.Jobs;
+using notifyme.server.Areas.Identity;
 using notifyme.server.Data;
 using notifyme.server.Services;
 using notifyme.shared.Models;
@@ -39,12 +45,19 @@ namespace notifyme.server
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddMudServices();
+            services.AddRouting();
+            services.AddDbContextFactory<NotifyMeContext>(opt => opt.UseSqlite($"Data Source=Data Stores/{NotifyMeContext.DB_NAME}.db"));
+            services.AddScoped(p => p.GetRequiredService<IDbContextFactory<NotifyMeContext>>().CreateDbContext());
+            services.AddIdentity<AppUser, IdentityRole>()
+                .AddDefaultUI()
+                .AddEntityFrameworkStores<NotifyMeContext>()
+                .AddDefaultTokenProviders();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<AppUser>>();
             services.AddSingleton<WeatherForecastService>();
             services.AddScoped<CreateNewNotificationViewModel>();
             services.AddScoped<RegisterNotificationSubscriptionViewModel>();
             services.AddTransient<IPushNotificationSubscriberService, PushNotificationSubscriberService>();
-            services.AddDbContextFactory<NotifyMeContext>(opt => opt.UseSqlite($"Data Source={nameof(NotifyMeContext.DB_NAME)}.db"));
-            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<INotificationRepository, NotificationRepository>();
             services.AddScoped<ISavedNotificationSubscriptionRepository, SavedNotificationSubscriptionRepository>();
             ConfigureJobScheduler(services);
@@ -90,9 +103,13 @@ namespace notifyme.server
             app.UseStaticFiles();
 
             app.UseRouting();
+            
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
