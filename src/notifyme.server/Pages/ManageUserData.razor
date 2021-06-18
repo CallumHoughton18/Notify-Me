@@ -1,0 +1,18 @@
+@page "/Manage"
+@using notifyme.shared.ViewModels
+@using notifyme.server.Shared.Manage_Notifications
+@using notifyme.server.Shared.Manage_Subscriptions
+
+@inject ManageUserDataViewModel _manageVm;  
+@inherits notifyme.server.Components.BaseMVVMComponent
+
+<NotificationsTable Notifications="_manageVm.Notifications" SelectedNotification="@_manageVm.SelectedNotification"/>
+<SubscriptionsTable Subscriptions="_manageVm.Subscriptions"/>
+
+@code {
+    protected override Task OnInitializedAsync()
+    {
+        BindViewModelToLifeCycle(_manageVm);
+        return base.OnInitializedAsync();
+    }
+}

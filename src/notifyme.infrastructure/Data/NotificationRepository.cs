@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using notifyme.shared.Models;
@@ -17,6 +19,12 @@ namespace notifyme.infrastructure.Data
         {
             await using var ctx = _dbContextFactory.CreateDbContext();
             return await ctx.Set<Notification>().FindAsync(guid);
+        }
+
+        public async Task<IList<Notification>> GetByUserAsync(string userName)
+        {
+            await using var ctx = _dbContextFactory.CreateDbContext();
+            return ctx.Set<Notification>().Where(x => x.UserName == userName).ToList();
         }
     }
 }

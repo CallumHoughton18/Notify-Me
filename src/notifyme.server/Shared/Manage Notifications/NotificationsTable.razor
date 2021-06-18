@@ -1,0 +1,27 @@
+@using notifyme.shared.Helpers
+@using notifyme.shared.Models.DataStore_Models
+
+<MudTable Items="@Notifications" @bind-SelectedItem="SelectedNotification" MultiSelection="false" Hover="@_hover">
+    <HeaderContent>
+        <MudTh>Title</MudTh>
+        <MudTh>Message</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Title">@context.NotificationTitle</MudTd>
+        <MudTd DataLabel="Message">@context.NotificationBody</MudTd>
+    </RowTemplate>
+</MudTable>
+
+@code {
+    private bool _hover = true;
+    [Parameter]
+    public RangeObservableCollection<Notification> Notifications { get; set; }
+    
+    [Parameter]
+    public Notification SelectedNotification { get; set; }
+
+    public void notifChanged(Notification eh)
+    {
+        var test = eh;
+    }
+}

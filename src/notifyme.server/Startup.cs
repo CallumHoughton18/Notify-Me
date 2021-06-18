@@ -56,6 +56,7 @@ namespace notifyme.server
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<AppUser>>();
             services.AddSingleton<WeatherForecastService>();
             services.AddScoped<CreateNewNotificationViewModel>();
+            services.AddScoped<ManageUserDataViewModel>();
             services.AddScoped<RegisterNotificationSubscriptionViewModel>();
             services.AddTransient<IPushNotificationSubscriberService, PushNotificationSubscriberService>();
             services.AddScoped<INotificationRepository, NotificationRepository>();
