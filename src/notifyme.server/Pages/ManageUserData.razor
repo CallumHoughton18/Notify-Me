@@ -6,8 +6,14 @@
 @inject ManageUserDataViewModel _manageVm;  
 @inherits notifyme.server.Components.BaseMVVMComponent
 
-<NotificationsTable Notifications="_manageVm.Notifications" SelectedNotification="@_manageVm.SelectedNotification"/>
+<MudText Typo="Typo.h4" Class="mb-5">Manage Notifications</MudText>
+<NotificationsTable Notifications="_manageVm.Notifications"
+                    @bind-SelectedNotification="_manageVm.SelectedNotification"
+                    Class="mb-5"
+                    SaveSelectedNotification="@_manageVm.SaveSelectedNotification"/>
 <SubscriptionsTable Subscriptions="_manageVm.Subscriptions"/>
+
+<LoadingOverlay IsLoadingState="@_manageVm.IsLoading" ></LoadingOverlay>
 
 @code {
     protected override Task OnInitializedAsync()

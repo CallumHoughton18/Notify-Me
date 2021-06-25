@@ -1,27 +1,81 @@
 @using notifyme.shared.Helpers
 @using notifyme.shared.Models.DataStore_Models
+@using Microsoft.AspNetCore.Components
 
-<MudTable Items="@Notifications" @bind-SelectedItem="SelectedNotification" MultiSelection="false" Hover="@_hover">
+<MudTable Items="@Notifications" MultiSelection="false" Hover="@_hover" SelectedItem="SelectedNotification"
+          SelectedItemChanged="SelectedNotificationChanged" Class="@Class"
+          RowEditPreview="BackupItem" RowEditCancel="ResetItemToOriginalValues" RowEditCommit="ItemHasBeenCommitted"
+          CanCancelEdit="true">
     <HeaderContent>
         <MudTh>Title</MudTh>
         <MudTh>Message</MudTh>
+        <MudTh>Actions</MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Title">@context.NotificationTitle</MudTd>
         <MudTd DataLabel="Message">@context.NotificationBody</MudTd>
+        <MudTd DataLabel="Actions">
+            <MudIconButton Icon="@Icons.Material.Filled.Delete"></MudIconButton>
+        </MudTd>
     </RowTemplate>
+    <RowEditingTemplate>
+        <MudTd DataLabel="Title">
+            <MudTextField @bind-Value="@context.NotificationTitle" Required/>
+        </MudTd>
+        <MudTd DataLabel="Message">
+            <MudTextField @bind-Value="@context.NotificationBody" Required/>
+        </MudTd>
+    </RowEditingTemplate>
 </MudTable>
 
 @code {
     private bool _hover = true;
+    private Notification backupPrevNotif = null;
+
     [Parameter]
-    public RangeObservableCollection<Notification> Notifications { get; set; }
-    
+    public IEnumerable<Notification> Notifications { get; set; }
+
     [Parameter]
     public Notification SelectedNotification { get; set; }
 
-    public void notifChanged(Notification eh)
+    [Parameter]
+    public EventCallback<Notification> SelectedNotificationChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<Notification> SaveSelectedNotification { get; set; }
+
+    [Parameter]
+    public string Class { get; set; }
+
+    private void BackupItem(object notification)
     {
-        var test = eh;
+        if (notification is not Notification prevNotification) return;
+
+        backupPrevNotif = new Notification()
+        {
+            NotificationTitle = prevNotification.NotificationTitle,
+            NotificationBody = prevNotification.NotificationBody
+        };
     }
+
+    private void ResetItemToOriginalValues(object notification)
+    {
+        if (notification is not Notification prevNotification) return;
+
+        prevNotification.NotificationTitle = backupPrevNotif.NotificationTitle;
+        prevNotification.NotificationBody = backupPrevNotif.NotificationBody;
+    }
+
+    private void ItemHasBeenCommitted(object notification)
+    {
+        if (notification is not Notification) return;
+        SaveSelectedNotification.InvokeAsync().ConfigureAwait(false);
+    }
+
+    private Task OnSelectedNotificationChanged(Notification e)
+    {
+        SelectedNotification = e;
+        return SelectedNotificationChanged.InvokeAsync(e);
+    }
+
 }

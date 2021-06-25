@@ -66,5 +66,12 @@ namespace notifyme.shared.ViewModels
             
             await base.InitializeAsync();
         }
+
+        public void SaveSelectedNotification()
+        {
+            IsLoading.SetNewValues(true, "Saving Notification Changes...");
+            _notifRepo.AddOrUpdateAsync(SelectedNotification);
+            IsLoading.SetNewValues(false);
+        }
     }
 }
