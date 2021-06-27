@@ -39,18 +39,17 @@ namespace notifyme.shared.ViewModels
             IsLoading.SetNewValues(true, "Saving Notification...");
             var currentUser = await _authService.GetCurrentUserAsync();
             
-            Notification newNotification = new Notification()
+            var newNotification = new Notification()
             {
                 NotificationTitle = QuickNotification.Title,
                 NotificationBody = QuickNotification.Body,
                 UserName = currentUser.UserName,
                 CronJobString = ""
             };
-            Console.WriteLine("Saving notification...");
+            
             await _notificationRepository.AddOrUpdateAsync(newNotification);
             await _notificationScheduler.ScheduleNotificationAsync(newNotification);
             IsLoading.SetNewValues(false);
-
         }
         
         public override async Task InitializeAsync()

@@ -73,5 +73,12 @@ namespace notifyme.shared.ViewModels
             _notifRepo.AddOrUpdateAsync(SelectedNotification);
             IsLoading.SetNewValues(false);
         }
+        
+        public async Task DeleteSelectedNotification()
+        {
+            Notifications.Remove(SelectedNotification);
+            await _notifRepo.DeleteAsync(SelectedNotification);
+            SelectedNotification = null;
+        }
     }
 }

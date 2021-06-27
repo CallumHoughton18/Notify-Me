@@ -9,14 +9,10 @@
     <HeaderContent>
         <MudTh>Title</MudTh>
         <MudTh>Message</MudTh>
-        <MudTh>Actions</MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Title">@context.NotificationTitle</MudTd>
         <MudTd DataLabel="Message">@context.NotificationBody</MudTd>
-        <MudTd DataLabel="Actions">
-            <MudIconButton Icon="@Icons.Material.Filled.Delete"></MudIconButton>
-        </MudTd>
     </RowTemplate>
     <RowEditingTemplate>
         <MudTd DataLabel="Title">
@@ -24,6 +20,9 @@
         </MudTd>
         <MudTd DataLabel="Message">
             <MudTextField @bind-Value="@context.NotificationBody" Required/>
+        </MudTd>
+        <MudTd DataLabel="Actions">
+            <MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="DeleteSelectedNotification"></MudIconButton>
         </MudTd>
     </RowEditingTemplate>
 </MudTable>
@@ -43,6 +42,9 @@
 
     [Parameter]
     public EventCallback<Notification> SaveSelectedNotification { get; set; }
+
+    [Parameter]
+    public EventCallback DeleteSelectedNotification { get; set; }
 
     [Parameter]
     public string Class { get; set; }

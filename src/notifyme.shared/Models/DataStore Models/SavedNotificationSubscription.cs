@@ -7,6 +7,8 @@ namespace notifyme.shared.Models.DataStore_Models
         [Key]
         public string P256HKey { get; set; }
         [Required]
+        public string DeviceName { get; set; }
+        [Required]
         public string AuthKey { get; set; }
         [Required]
         public string EndPoint { get; set; }
