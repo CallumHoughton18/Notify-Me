@@ -1,5 +1,6 @@
 @using notifyme.shared.ViewModels
 @inherits notifyme.server.Components.BaseMVVMComponent
+@inject IDialogService _dialogService
 
 @if (ViewModel.IsInitialized && !ViewModel.IsDeviceRegistered)
 {
@@ -17,8 +18,15 @@
         return base.OnInitializedAsync();
     }
     
-    private void HandleSubmit()
+    async Task HandleSubmit()
     {
-        ViewModel.SaveNotificationSubscription();
+        var dialog = _dialogService.Show<NameSubscriptionDialog>("Add Browser Subscription");
+        var result = await dialog.Result;
+
+        if (!result.Cancelled)
+        {
+            var subscriptionName = result.Data.ToString();
+            await ViewModel.SaveNotificationSubscription(subscriptionName);
+        }
     }
 }

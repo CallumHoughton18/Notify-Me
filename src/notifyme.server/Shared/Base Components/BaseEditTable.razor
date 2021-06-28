@@ -1,0 +1,65 @@
+@using notifyme.shared.Helpers
+@using notifyme.shared.Models.DataStore_Models
+@using Microsoft.AspNetCore.Components
+
+@typeparam ModelType 
+<MudTable Items="@DataCollection" MultiSelection="false" Hover="@_hover" SelectedItem="SelectedData"
+          SelectedItemChanged="SelectedDataChanged" Class="@Class"
+          RowEditPreview="BackupItem" RowEditCancel="ResetItemToOriginalValues" RowEditCommit="ItemHasBeenCommitted"
+          CanCancelEdit="true">
+    @ChildContent
+</MudTable>
+
+@code {
+    private bool _hover = true;
+    private ICloneableData<ModelType> _backupPrevSelection = default;
+    
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public IEnumerable<ICloneableData<ModelType>> DataCollection { get; set; }
+
+    [Parameter]
+    public ICloneableData<ModelType> SelectedData { get; set; }
+
+    [Parameter]
+    public EventCallback<ICloneableData<ModelType>> SelectedDataChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<ICloneableData<ModelType>> SaveSelectedData { get; set; }
+
+    [Parameter]
+    public EventCallback DeleteSelectedData { get; set; }
+
+    [Parameter]
+    public string Class { get; set; }
+
+    private void BackupItem(object selectedData)
+    {
+        // if (SelectedData is not  ICloneableData<ModelType> prevData) return;
+        //
+        // _backupPrevSelection = prevData.CloneData()
+    }
+
+    private void ResetItemToOriginalValues(object notification)
+    {
+        if (notification is not Notification prevNotification) return;
+
+        // prevNotification.NotificationTitle = _backupPrevSelection.NotificationTitle;
+        // prevNotification.NotificationBody = _backupPrevSelection.NotificationBody;
+    }
+
+    private void ItemHasBeenCommitted(object notification)
+    {
+        if (notification is not Notification) return;
+        SaveSelectedData.InvokeAsync().ConfigureAwait(false);
+    }
+
+    // private Task OnSelectedNotificationChanged(ModelType e)
+    // {
+    //     // SelectedData = e;
+    //     // return SelectedDataChanged.InvokeAsync(e);
+    // }
+
+}

@@ -59,7 +59,7 @@ namespace notifyme.shared.ViewModels
                                  await HasSubscriptionSaved(currentUser.UserName);
         }
 
-        public async Task SaveNotificationSubscription()
+        public async Task SaveNotificationSubscription(string friendlySubscriptionName)
         {
             var currentUser = await _authService.GetCurrentUserAsync();
             await _pushNotificationSubscriberService.RegisterSubscription();
@@ -71,6 +71,7 @@ namespace notifyme.shared.ViewModels
                 AuthKey = currentSub.AuthKey,
                 EndPoint = currentSub.EndPoint,
                 P256HKey = currentSub.P256hKey,
+                DeviceName =  friendlySubscriptionName
             };
             
             await _subscriptionRepository.AddOrUpdateAsync(newNotificationSubscription);

@@ -3,11 +3,16 @@
 
 <MudTable Items="@Subscriptions">
     <HeaderContent>
-        <MudTh>End Point</MudTh>
+        <MudTh>Subscription Name</MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="End Point">@context.EndPoint</MudTd>
+        <MudTd DataLabel="Subscription Name">@context.DeviceName</MudTd>
     </RowTemplate>
+        <RowEditingTemplate>
+            <MudTd DataLabel="Subscription Name">
+                <MudTextField @bind-Value="@context.DeviceName" Required/>
+            </MudTd>
+        </RowEditingTemplate>
 </MudTable>
 
 @code {

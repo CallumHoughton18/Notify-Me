@@ -1,0 +1,30 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.AddAlert" Class="mr-3 mb-n1"/>
+            Add Notification Subscription for This Browser
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudTextField @bind-Value="@FriendlyName" Label="Friendly Name" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Error" OnClick="AddSubscription">Add Subscription</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] 
+    MudDialogInstance MudDialog { get; set; }
+
+    private string FriendlyName { get; set; }
+
+    void Cancel() => MudDialog.Cancel();
+    
+    private void AddSubscription()
+    {
+        MudDialog.Close(DialogResult.Ok(FriendlyName));
+    }
+}
+
