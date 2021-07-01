@@ -1,8 +1,7 @@
-@using notifyme.shared.Helpers
 @using notifyme.shared.Models.DataStore_Models
-@using Microsoft.AspNetCore.Components
 
-@typeparam ModelType 
+@typeparam TModelType 
+
 <MudTable Items="@DataCollection" MultiSelection="false" Hover="@_hover" SelectedItem="SelectedData"
           SelectedItemChanged="SelectedDataChanged" Class="@Class"
           RowEditPreview="BackupItem" RowEditCancel="ResetItemToOriginalValues" RowEditCommit="ItemHasBeenCommitted"
@@ -12,42 +11,46 @@
 
 @code {
     private bool _hover = true;
-    private ICloneableData<ModelType> _backupPrevSelection = default;
+    private TModelType _backupPrevSelection = default;
     
     [Parameter]
     public RenderFragment ChildContent { get; set; }
 
     [Parameter]
-    public IEnumerable<ICloneableData<ModelType>> DataCollection { get; set; }
+    public IEnumerable<TModelType> DataCollection { get; set; }
 
     [Parameter]
-    public ICloneableData<ModelType> SelectedData { get; set; }
+    public TModelType SelectedData { get; set; }
 
     [Parameter]
-    public EventCallback<ICloneableData<ModelType>> SelectedDataChanged { get; set; }
+    public EventCallback<TModelType> SelectedDataChanged { get; set; }
 
     [Parameter]
-    public EventCallback<ICloneableData<ModelType>> SaveSelectedData { get; set; }
+    public EventCallback<TModelType> SaveSelectedData { get; set; }
 
     [Parameter]
     public EventCallback DeleteSelectedData { get; set; }
-
+    
+    [Parameter]
+    public Func<TModelType, TModelType> CloneAction { get; set; }
+    
+    [Parameter]
+    public Action<TModelType, TModelType> RestoreAction { get; set; }
+    
     [Parameter]
     public string Class { get; set; }
 
     private void BackupItem(object selectedData)
     {
-        // if (SelectedData is not  ICloneableData<ModelType> prevData) return;
-        //
-        // _backupPrevSelection = prevData.CloneData()
+        if (SelectedData is not  TModelType prevData) return;
+
+        _backupPrevSelection = CloneAction(prevData);
     }
 
     private void ResetItemToOriginalValues(object notification)
     {
-        if (notification is not Notification prevNotification) return;
-
-        // prevNotification.NotificationTitle = _backupPrevSelection.NotificationTitle;
-        // prevNotification.NotificationBody = _backupPrevSelection.NotificationBody;
+        if (notification is not TModelType prevNotification) return;
+        RestoreAction(prevNotification, _backupPrevSelection);
     }
 
     private void ItemHasBeenCommitted(object notification)
@@ -56,10 +59,9 @@
         SaveSelectedData.InvokeAsync().ConfigureAwait(false);
     }
 
-    // private Task OnSelectedNotificationChanged(ModelType e)
-    // {
-    //     // SelectedData = e;
-    //     // return SelectedDataChanged.InvokeAsync(e);
-    // }
-
+    private Task OnSelectedNotificationChanged(TModelType e)
+    {
+        SelectedData = e;
+        return SelectedDataChanged.InvokeAsync(e);
+    }
 }

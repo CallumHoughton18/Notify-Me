@@ -1,7 +1,7 @@
 namespace notifyme.shared.Helpers
 {
-    public interface ICloneableData<T>
+    public interface ICloneableData
     {
-        T CloneData();
+        ICloneableData CloneData();
     }
 }
