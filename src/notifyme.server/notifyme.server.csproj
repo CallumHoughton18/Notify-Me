@@ -10,6 +10,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas" />
+    <Folder Include="Shared\Base Components" />
     <Folder Include="wwwroot\img\" />
     <Folder Include="Scripts\" />
     <Folder Include="wwwroot\js\" />

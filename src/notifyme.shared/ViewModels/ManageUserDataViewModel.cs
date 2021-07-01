@@ -15,14 +15,16 @@ namespace notifyme.shared.ViewModels
         private readonly IAuthService _authService;
         private readonly ISavedNotificationSubscriptionRepository _subRepo;
         private readonly INotificationRepository _notifRepo;
+        private readonly IPushNotificationSubscriberService _pushNotificationSubscriberService;
         private User _currentUser;
 
         public ManageUserDataViewModel(IAuthService authService, ISavedNotificationSubscriptionRepository subRepo,
-            INotificationRepository notifRepo)
+            INotificationRepository notifRepo, IPushNotificationSubscriberService pushNotificationSubscriberService)
         {
             _authService = authService;
             _subRepo = subRepo;
             _notifRepo = notifRepo;
+            _pushNotificationSubscriberService = pushNotificationSubscriberService;
         }
 
         private RangeObservableCollection<SavedNotificationSubscription> _subscriptions = new();
@@ -31,6 +33,14 @@ namespace notifyme.shared.ViewModels
         {
             get => _subscriptions;
             set => SetValue(ref _subscriptions, value);
+        }
+        
+        private SavedNotificationSubscription _selectedSubscription;
+
+        public SavedNotificationSubscription SelectedSubscription
+        {
+            get => _selectedSubscription;
+            set => SetValue(ref _selectedSubscription, value);
         }
 
         private RangeObservableCollection<Notification> _notifications = new();
@@ -46,11 +56,7 @@ namespace notifyme.shared.ViewModels
         public Notification SelectedNotification
         {
             get => _selectedNotification;
-            set
-            {
-                if (value is not null) Console.WriteLine("Selected An Item");
-                SetValue(ref _selectedNotification, value);
-            }
+            set => SetValue(ref _selectedNotification, value);
         }
 
         public override async Task InitializeAsync()
@@ -63,6 +69,8 @@ namespace notifyme.shared.ViewModels
             var subscriptions = await _subRepo.GetByUserName(_currentUser.UserName);
             Subscriptions.Clear();
             Subscriptions.AddRange(subscriptions.ToList());
+
+            await _pushNotificationSubscriberService.Initialize();
             
             await base.InitializeAsync();
         }
@@ -79,6 +87,26 @@ namespace notifyme.shared.ViewModels
             Notifications.Remove(SelectedNotification);
             await _notifRepo.DeleteAsync(SelectedNotification);
             SelectedNotification = null;
+        }
+
+        public void SaveSelectedSubscription()
+        {
+            IsLoading.SetNewValues(true, "Saving Subscription Changes...");
+            _subRepo.AddOrUpdateAsync(SelectedSubscription);
+            IsLoading.SetNewValues(false);
+        }
+
+        public async Task DeleteSelectedSubscription()
+        {
+            var unsubscribedBrowserFromNotifications =
+                await _pushNotificationSubscriberService.UnsubscribeFromNotifications();
+            if (unsubscribedBrowserFromNotifications)
+            {
+                Subscriptions.Remove(SelectedSubscription);
+                await _subRepo.DeleteAsync(SelectedSubscription);
+            }
+            
+            SelectedSubscription = null;
         }
     }
 }

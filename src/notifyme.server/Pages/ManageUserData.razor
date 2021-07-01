@@ -12,7 +12,11 @@
                     Class="mb-5"
                     SaveSelectedNotification="@_manageVm.SaveSelectedNotification"
                     DeleteSelectedNotification="@(() => _manageVm.DeleteSelectedNotification())"/>
-<SubscriptionsTable Subscriptions="_manageVm.Subscriptions"/>
+
+<SubscriptionsTable Subscriptions="_manageVm.Subscriptions" 
+                    @bind-SelectedSubscription="_manageVm.SelectedSubscription"
+                    SavedSelectedSubscription="@_manageVm.SaveSelectedSubscription"
+                    DeleteSelectedSubscription="@(() => _manageVm.DeleteSelectedSubscription())"/>
 
 <LoadingOverlay IsLoadingState="@_manageVm.IsLoading" ></LoadingOverlay>
 
@@ -21,10 +25,5 @@
     {
         BindViewModelToLifeCycle(_manageVm);
         return base.OnInitializedAsync();
-    }
-
-    async Task DeleteSelectedNotificationAsync()
-    {
-        await _manageVm.DeleteSelectedNotification();
     }
 }

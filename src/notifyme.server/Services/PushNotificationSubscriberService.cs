@@ -40,6 +40,17 @@ namespace notifyme.server.Services
             return null;
         }
 
+        public async Task<bool> UnsubscribeFromNotifications()
+        {
+            var hasPermission = await CheckAndRequestNotificationPermission();
+            if (hasPermission)
+            {
+               return await _module.InvokeAsync<bool>("unsubscribeFromNotifications");
+            }
+
+            return true;
+        }
+
         public async Task RegisterSubscription()
         {
             var hasPermission = await CheckAndRequestNotificationPermission();

@@ -10,5 +10,6 @@ namespace notifyme.shared.ServiceInterfaces
         Task<bool> CheckAndRequestNotificationPermission();
         Task RegisterSubscription();
         Task<NotificationSubscription> GetCurrentUserAndDeviceSubscription();
+        Task<bool> UnsubscribeFromNotifications();
     }
 }

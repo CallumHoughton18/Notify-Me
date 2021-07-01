@@ -1,21 +1,81 @@
 @using notifyme.shared.Helpers
 @using notifyme.shared.Models.DataStore_Models
 
-<MudTable Items="@Subscriptions">
+<MudTable Items="@Subscriptions" MultiSelection="false" Hover="@_hover" SelectedItem="SelectedSubscription"
+          SelectedItemChanged="SelectedSubscriptionChanged" Class="@Class"
+          RowEditPreview="BackupItem" RowEditCancel="ResetItemToOriginalValues" RowEditCommit="ItemHasBeenCommitted"
+          CanCancelEdit="true">
     <HeaderContent>
-        <MudTh>Subscription Name</MudTh>
+        <MudTh>Device Name</MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="Subscription Name">@context.DeviceName</MudTd>
+        <MudTd DataLabel="Device Name">@context.DeviceName</MudTd>
     </RowTemplate>
-        <RowEditingTemplate>
-            <MudTd DataLabel="Subscription Name">
-                <MudTextField @bind-Value="@context.DeviceName" Required/>
-            </MudTd>
-        </RowEditingTemplate>
+    <RowEditingTemplate>
+        <MudTd DataLabel="Device Name">
+            <MudTextField @bind-Value="@context.DeviceName" Required/>
+        </MudTd>
+        <MudTd DataLabel="Actions">
+            <MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="DeleteSelectedSubscription"></MudIconButton>
+        </MudTd>
+    </RowEditingTemplate>
 </MudTable>
 
 @code {
+    private bool _hover = true;
+    private SavedNotificationSubscription _backupSubscription = null;
+
     [Parameter]
-    public RangeObservableCollection<SavedNotificationSubscription> Subscriptions { get; set; }
+    public IEnumerable<SavedNotificationSubscription> Subscriptions { get; set; }
+
+    [Parameter]
+    public SavedNotificationSubscription SelectedSubscription { get; set; }
+
+    [Parameter]
+    public EventCallback<SavedNotificationSubscription> SelectedSubscriptionChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<SavedNotificationSubscription> SavedSelectedSubscription { get; set; }
+
+    [Parameter]
+    public EventCallback DeleteSelectedSubscription { get; set; }
+
+    [Parameter]
+    public string Class { get; set; }
+
+    private void BackupItem(object subscription)
+    {
+        if (subscription is not SavedNotificationSubscription prevSubscription) return;
+
+        _backupSubscription = new SavedNotificationSubscription()
+        {
+            DeviceName = prevSubscription.DeviceName,
+            EndPoint = prevSubscription.EndPoint,
+            AuthKey = prevSubscription.AuthKey,
+            P256HKey = prevSubscription.P256HKey
+        };
+    }
+
+    private void ResetItemToOriginalValues(object subscription)
+    {
+        if (subscription is not SavedNotificationSubscription prevSubscription) return;
+
+        prevSubscription.DeviceName = _backupSubscription.DeviceName;
+        prevSubscription.EndPoint = _backupSubscription.EndPoint;
+        prevSubscription.AuthKey = _backupSubscription.AuthKey;
+        prevSubscription.P256HKey = _backupSubscription.P256HKey;
+    }
+
+    private void ItemHasBeenCommitted(object subscription)
+    {
+        if (subscription is not SavedNotificationSubscription) return;
+        SavedSelectedSubscription.InvokeAsync().ConfigureAwait(false);
+    }
+
+    private Task OnSelectedNotificationChanged(SavedNotificationSubscription e)
+    {
+        SelectedSubscription = e;
+        return SelectedSubscriptionChanged.InvokeAsync(e);
+    }
+
 }

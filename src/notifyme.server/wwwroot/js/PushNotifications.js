@@ -17,23 +17,17 @@ export const checkAndRequestNotificationPermission = () => __awaiter(void 0, voi
 export const registerServiceWorker = (serverKey) => __awaiter(void 0, void 0, void 0, function* () {
     const swRegistration = yield navigator.serviceWorker.register("../service-worker.js");
     const subscription = yield swRegistration.pushManager.getSubscription();
-    console.log(subscription);
     if (subscription == null) {
         const pushSub = yield swRegistration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: serverKey });
-        console.log(`New subscription added: ${pushSub.toJSON()}`);
     }
     else {
-        console.log("push subscription is not null, therefore must already exist");
         const p256hKey = arrayBufferToBase64(subscription.getKey("p256dh"));
         const authKey = arrayBufferToBase64(subscription.getKey("auth"));
-        console.log(p256hKey);
-        console.log(authKey);
     }
 });
 export const getCurrentSubscriptionDetails = (serverKey) => __awaiter(void 0, void 0, void 0, function* () {
     const swRegistration = yield navigator.serviceWorker.register("../service-worker.js");
     const subscription = yield swRegistration.pushManager.getSubscription();
-    console.log(subscription);
     if (subscription == null)
         return null;
     return {
@@ -41,6 +35,13 @@ export const getCurrentSubscriptionDetails = (serverKey) => __awaiter(void 0, vo
         P256hKey: arrayBufferToBase64(subscription.getKey("p256dh")),
         AuthKey: arrayBufferToBase64(subscription.getKey("auth"))
     };
+});
+export const unsubscribeFromNotifications = () => __awaiter(void 0, void 0, void 0, function* () {
+    const swRegistration = yield navigator.serviceWorker.register("../service-worker.js");
+    const subscription = yield swRegistration.pushManager.getSubscription();
+    if (subscription == null)
+        return true;
+    return yield subscription.unsubscribe();
 });
 function arrayBufferToBase64(buffer) {
     var binary = '';

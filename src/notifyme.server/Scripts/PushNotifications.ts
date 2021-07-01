@@ -15,30 +15,31 @@ export const checkAndRequestNotificationPermission = async (): Promise<Boolean> 
 export const registerServiceWorker = async (serverKey: string) => {
     const swRegistration = await navigator.serviceWorker.register("../service-worker.js")
     const subscription = await swRegistration.pushManager.getSubscription()
-    console.log(subscription)
     if (subscription == null) {
         const pushSub = await swRegistration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: serverKey })
-        console.log(`New subscription added: ${pushSub.toJSON()}`)
     }
     else {
-        console.log("push subscription is not null, therefore must already exist")
         const p256hKey = arrayBufferToBase64(subscription.getKey("p256dh"));
         const authKey = arrayBufferToBase64(subscription.getKey("auth"));
-        console.log(p256hKey);
-        console.log(authKey);
     }
 }
 
 export const getCurrentSubscriptionDetails = async (serverKey: string): Promise<NotificationSubscription> => {
     const swRegistration = await navigator.serviceWorker.register("../service-worker.js")
     const subscription = await swRegistration.pushManager.getSubscription()
-    console.log(subscription);
     if (subscription == null) return null
     return {
         EndPoint: subscription.endpoint,
         P256hKey: arrayBufferToBase64(subscription.getKey("p256dh")),
         AuthKey: arrayBufferToBase64(subscription.getKey("auth"))
     }
+}
+
+export const unsubscribeFromNotifications = async (): Promise<boolean> => {
+    const swRegistration = await navigator.serviceWorker.register("../service-worker.js")
+    const subscription = await swRegistration.pushManager.getSubscription();
+    if (subscription == null) return true;
+    return await subscription.unsubscribe();
 }
 
 function arrayBufferToBase64(buffer) {
