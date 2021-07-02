@@ -11,16 +11,19 @@ namespace notifyme.scheduler.Jobs
     {
         private readonly INotificationRepository _notificationRepository;
         private readonly ISavedNotificationSubscriptionRepository _subscriptionRepository;
+        private readonly INotificationSchedulerInterface _notificationSchedulerInterface;
         private readonly IPushNotificationPusherService _pushNotificationPusherService;
         private readonly VapidDetails _vapidDetails;
 
 
         public SendPushNotificationJob(INotificationRepository notificationRepository,
             ISavedNotificationSubscriptionRepository subscriptionRepository,
+            INotificationSchedulerInterface notificationSchedulerInterface,
             IPushNotificationPusherService pushNotificationPusherService, VapidDetails vapidDetails)
         {
             _notificationRepository = notificationRepository;
             _subscriptionRepository = subscriptionRepository;
+            _notificationSchedulerInterface = notificationSchedulerInterface;
             _pushNotificationPusherService = pushNotificationPusherService;
             _vapidDetails = vapidDetails;
         }
@@ -37,7 +40,11 @@ namespace notifyme.scheduler.Jobs
                     _pushNotificationPusherService.SendPushNotification(sub, notification, _vapidDetails);
                 }
 
-                Console.WriteLine(notification.NotificationTitle);
+                if (!notification.Repeat)
+                {
+                    await _notificationSchedulerInterface.DeScheduleNotificationAsync(notification);
+                    await _notificationRepository.DeleteAsync(notification);
+                }
             }
         }
     }

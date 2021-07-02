@@ -9,5 +9,6 @@ namespace notifyme.shared.ServiceInterfaces
     {
         Task InitializeAsync();
         Task ScheduleNotificationAsync(Notification notification);
+        Task DeScheduleNotificationAsync(Notification notification);
     }
 }

@@ -19,5 +19,7 @@ namespace notifyme.shared.Models.DataStore_Models
         [Required]
         [RegularExpression(Constants.CustomCronExpressionRegex)]
         public string CronJobString { get; set; }
+        [Required]
+        public bool Repeat { get; set; }
     }
 }

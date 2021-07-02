@@ -18,6 +18,7 @@ using notifyme.infrastructure.Data;
 using notifyme.infrastructure.Identity;
 using notifyme.scheduler;
 using notifyme.scheduler.Jobs;
+using notifyme.scheduler.Services;
 using notifyme.server.Areas.Identity;
 using notifyme.server.Data;
 using notifyme.server.Services;
@@ -53,6 +54,7 @@ namespace notifyme.server
                 .AddEntityFrameworkStores<NotifyMeContext>()
                 .AddDefaultTokenProviders();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<ICronExpressionBuilder, CronExpressionBuilder>();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<AppUser>>();
             services.AddSingleton<WeatherForecastService>();
             services.AddScoped<CreateNewNotificationViewModel>();

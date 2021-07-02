@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using notifyme.shared.RepositoryInterfaces;
 using notifyme.shared.ServiceInterfaces;
@@ -13,16 +14,20 @@ namespace notifyme.shared.ViewModels
     {
         private readonly IPushNotificationSubscriberService _pushNotificationSubscriberService;
         private readonly INotificationSchedulerInterface _notificationScheduler;
+        private readonly ICronExpressionBuilder _cronExpressionBuilder;
         private readonly INotificationRepository _notificationRepository;
         private readonly IAuthService _authService;
         
         public CreateNewNotificationViewModel(
             IPushNotificationSubscriberService pushNotificationSubscriberService, 
             INotificationSchedulerInterface notificationScheduler, 
-            INotificationRepository notificationRepository, IAuthService authService)
+            ICronExpressionBuilder cronExpressionBuilder,
+            INotificationRepository notificationRepository, 
+            IAuthService authService)
         {
             _pushNotificationSubscriberService = pushNotificationSubscriberService;
             _notificationScheduler = notificationScheduler;
+            _cronExpressionBuilder = cronExpressionBuilder;
             _notificationRepository = notificationRepository;
             _authService = authService;
         }
@@ -38,13 +43,22 @@ namespace notifyme.shared.ViewModels
         {
             IsLoading.SetNewValues(true, "Saving Notification...");
             var currentUser = await _authService.GetCurrentUserAsync();
+            var currentDateTime = DateTime.Now;
+            var shouldFireAt = QuickNotification.TimeFormat switch  
+            {
+                NotifyMeEnums.QuickNotificationTimeFormat.Minutes => currentDateTime.AddMinutes(QuickNotification.RequestedTime),
+                NotifyMeEnums.QuickNotificationTimeFormat.Hours => currentDateTime.AddHours(QuickNotification.RequestedTime),
+                NotifyMeEnums.QuickNotificationTimeFormat.Days => currentDateTime.AddDays(QuickNotification.RequestedTime),
+                _ => throw new ArgumentOutOfRangeException()
+            }; 
             
             var newNotification = new Notification()
             {
                 NotificationTitle = QuickNotification.Title,
                 NotificationBody = QuickNotification.Body,
                 UserName = currentUser.UserName,
-                CronJobString = ""
+                CronJobString = _cronExpressionBuilder.DateTimeToCronExpression(shouldFireAt),
+                Repeat = false
             };
             
             await _notificationRepository.AddOrUpdateAsync(newNotification);

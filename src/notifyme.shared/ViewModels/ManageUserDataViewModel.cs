@@ -16,15 +16,21 @@ namespace notifyme.shared.ViewModels
         private readonly ISavedNotificationSubscriptionRepository _subRepo;
         private readonly INotificationRepository _notifRepo;
         private readonly IPushNotificationSubscriberService _pushNotificationSubscriberService;
+        private readonly INotificationSchedulerInterface _notificationSchedulerInterface;
         private User _currentUser;
 
-        public ManageUserDataViewModel(IAuthService authService, ISavedNotificationSubscriptionRepository subRepo,
-            INotificationRepository notifRepo, IPushNotificationSubscriberService pushNotificationSubscriberService)
+        public ManageUserDataViewModel(
+            IAuthService authService, 
+            ISavedNotificationSubscriptionRepository subRepo,
+            INotificationRepository notifRepo, 
+            IPushNotificationSubscriberService pushNotificationSubscriberService,
+            INotificationSchedulerInterface notificationSchedulerInterface)
         {
             _authService = authService;
             _subRepo = subRepo;
             _notifRepo = notifRepo;
             _pushNotificationSubscriberService = pushNotificationSubscriberService;
+            _notificationSchedulerInterface = notificationSchedulerInterface;
         }
 
         private RangeObservableCollection<SavedNotificationSubscription> _subscriptions = new();
@@ -85,6 +91,7 @@ namespace notifyme.shared.ViewModels
         public async Task DeleteSelectedNotification()
         {
             Notifications.Remove(SelectedNotification);
+            await _notificationSchedulerInterface.DeScheduleNotificationAsync(SelectedNotification);
             await _notifRepo.DeleteAsync(SelectedNotification);
             SelectedNotification = null;
         }

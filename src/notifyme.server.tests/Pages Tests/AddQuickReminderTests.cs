@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Bunit;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
+using notifyme.scheduler.Services;
 using notifyme.server.Pages;
 using notifyme.server.tests.Extensions;
 using notifyme.shared.Models.DataStore_Models;
@@ -26,7 +27,7 @@ namespace notifyme.server.tests.Pages_Tests
             var authServiceMock = new Mock<IAuthService>(MockBehavior.Loose);
 
             var vm = new CreateNewNotificationViewModel(pushSubMock.Object,
-                schedulerMock.Object, notifRepoMock.Object, authServiceMock.Object);
+                schedulerMock.Object,new CronExpressionBuilder(), notifRepoMock.Object, authServiceMock.Object);
 
             var subVm = new RegisterNotificationSubscriptionViewModel(pushSubMock.Object, savedNotifSubMock.Object,
                 authServiceMock.Object);
