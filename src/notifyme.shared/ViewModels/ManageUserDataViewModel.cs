@@ -77,6 +77,8 @@ namespace notifyme.shared.ViewModels
             Subscriptions.AddRange(subscriptions.ToList());
 
             await _pushNotificationSubscriberService.Initialize();
+
+            await _notificationSchedulerInterface.InitializeAsync();
             
             await base.InitializeAsync();
         }

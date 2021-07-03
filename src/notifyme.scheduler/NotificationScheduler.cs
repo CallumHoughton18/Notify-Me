@@ -16,7 +16,7 @@ namespace notifyme.scheduler
 
         public NotificationScheduler(ISchedulerFactory schedulerFactory)
         {
-            this._schedulerFactory = schedulerFactory;
+            _schedulerFactory = schedulerFactory;
         }
 
         public async Task InitializeAsync()
@@ -41,7 +41,8 @@ namespace notifyme.scheduler
 
         public async Task DeScheduleNotificationAsync(Notification notification)
         {
-            await _scheduler.DeleteJob(new JobKey(notification.NotificationId.ToString(), "test"));
+            var jobKey = new JobKey(notification.NotificationId.ToString(), "test");
+            await _scheduler.DeleteJob(jobKey);
         }
     }
 }

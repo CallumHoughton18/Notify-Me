@@ -30,7 +30,7 @@ namespace notifyme.scheduler.Jobs
 
         public async Task Execute(IJobExecutionContext context)
         {
-            Console.WriteLine(context.JobDetail.Key.Name);
+            await _notificationSchedulerInterface.InitializeAsync();
             if (Guid.TryParse(context.JobDetail.Key.Name, out var notificationGuid))
             {
                 var notification = await _notificationRepository.GetByNotificationId(notificationGuid);
