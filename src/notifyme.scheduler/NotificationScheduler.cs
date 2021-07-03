@@ -11,6 +11,7 @@ namespace notifyme.scheduler
 {
     public class NotificationScheduler : INotificationSchedulerInterface
     {
+        public const string Jobgroupname = "jobs";
         private readonly ISchedulerFactory _schedulerFactory;
         private IScheduler _scheduler;
 
@@ -27,12 +28,12 @@ namespace notifyme.scheduler
         public async Task ScheduleNotificationAsync(Notification notification)
         {
             var job = JobBuilder.Create<SendPushNotificationJob>()
-                .WithIdentity(notification.NotificationId.ToString(), "test")
+                .WithIdentity(notification.NotificationId.ToString(), Jobgroupname)
                 .Build();
 
             var cronExpression = new CronExpression(notification.CronJobString);
             var trigger = TriggerBuilder.Create()
-                .WithIdentity($"{notification.NotificationId}-trigger", "test")
+                .WithIdentity($"{notification.NotificationId}-trigger", Jobgroupname)
                 .WithSchedule(CronScheduleBuilder.CronSchedule(cronExpression))
                 .Build();
 
@@ -41,7 +42,7 @@ namespace notifyme.scheduler
 
         public async Task DeScheduleNotificationAsync(Notification notification)
         {
-            var jobKey = new JobKey(notification.NotificationId.ToString(), "test");
+            var jobKey = new JobKey(notification.NotificationId.ToString(), Jobgroupname);
             await _scheduler.DeleteJob(jobKey);
         }
     }
