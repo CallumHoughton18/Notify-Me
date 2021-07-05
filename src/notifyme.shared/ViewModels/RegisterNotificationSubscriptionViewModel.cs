@@ -52,7 +52,7 @@ namespace notifyme.shared.ViewModels
             return userSubs.FirstOrDefault(x => x.P256HKey == currentSub.P256hKey) != null;
         }
 
-        public async Task SetIsDeviceRegistered()
+        private async Task SetIsDeviceRegistered()
         {
             var currentUser = await _authService.GetCurrentUserAsync();
             IsDeviceRegistered = await HasSubscriptionEnabled() &&
@@ -64,6 +64,11 @@ namespace notifyme.shared.ViewModels
             var currentUser = await _authService.GetCurrentUserAsync();
             await _pushNotificationSubscriberService.RegisterSubscription();
             var currentSub = await _pushNotificationSubscriberService.GetCurrentUserAndDeviceSubscription();
+            if (currentSub is null)
+            {
+                IsDeviceRegistered = false;
+                return;
+            }
 
             var newNotificationSubscription = new SavedNotificationSubscription()
             {
