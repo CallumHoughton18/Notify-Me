@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using Moq;
 using notifyme.shared.Models.DataStore_Models;
@@ -13,6 +14,12 @@ namespace notifyme.server.tests.Mocks
             Setup(x =>
                     x.AddOrUpdateAsync(It.IsAny<SavedNotificationSubscription>(), It.IsAny<CancellationToken>()))
                 .Callback<SavedNotificationSubscription, CancellationToken>((x, y) => callback(x));
+            return this;
+        }
+
+        public SavedNotificationSubscriptionRepositoryMock MockGetByUserName(string userName, List<SavedNotificationSubscription> returnedSubscriptions)
+        {
+            Setup(x => x.GetByUserName(userName)).ReturnsAsync(returnedSubscriptions);
             return this;
         }
     }
