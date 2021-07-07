@@ -25,9 +25,11 @@ namespace notifyme.server.tests.Pages_Tests
             var notifRepoMock = new Mock<INotificationRepository>(MockBehavior.Loose);
             var savedNotifSubMock = new Mock<ISavedNotificationSubscriptionRepository>(MockBehavior.Loose);
             var authServiceMock = new Mock<IAuthService>(MockBehavior.Loose);
+            var dateTimeMock = new Mock<IDateTimeProvider>(MockBehavior.Loose);
 
             var vm = new CreateNewNotificationViewModel(pushSubMock.Object,
-                schedulerMock.Object,new CronExpressionBuilder(), notifRepoMock.Object, authServiceMock.Object);
+                schedulerMock.Object, new CronExpressionBuilder(), notifRepoMock.Object, authServiceMock.Object,
+                dateTimeMock.Object);
 
             var subVm = new RegisterNotificationSubscriptionViewModel(pushSubMock.Object, savedNotifSubMock.Object,
                 authServiceMock.Object);

@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using notifyme.shared.Helpers;
 using notifyme.shared.RepositoryInterfaces;
 using notifyme.shared.ServiceInterfaces;
 using notifyme.shared.Models;
@@ -14,19 +17,22 @@ namespace notifyme.shared.ViewModels
         private readonly ICronExpressionBuilder _cronExpressionBuilder;
         private readonly INotificationRepository _notificationRepository;
         private readonly IAuthService _authService;
-        
+        private readonly IDateTimeProvider _dateTimeProvider;
+
         public CreateNewNotificationViewModel(
             IPushNotificationSubscriberService pushNotificationSubscriberService, 
             INotificationSchedulerInterface notificationScheduler, 
             ICronExpressionBuilder cronExpressionBuilder,
             INotificationRepository notificationRepository, 
-            IAuthService authService)
+            IAuthService authService,
+            IDateTimeProvider dateTimeProvider)
         {
             _pushNotificationSubscriberService = pushNotificationSubscriberService;
             _notificationScheduler = notificationScheduler;
             _cronExpressionBuilder = cronExpressionBuilder;
             _notificationRepository = notificationRepository;
             _authService = authService;
+            _dateTimeProvider = dateTimeProvider;
         }
 
         private QuickNotification _quickNotification = new();
@@ -38,9 +44,12 @@ namespace notifyme.shared.ViewModels
         
         public async Task SaveNotification()
         {
+            var isValid = ValidationHelpers.ValidateModel(QuickNotification);
+            if (!isValid.ReturnBool) throw new ValidationException(isValid.ReturnString);
+            
             IsLoading.SetNewValues(true, "Saving Notification...");
             var currentUser = await _authService.GetCurrentUserAsync();
-            var currentDateTime = DateTime.Now;
+            var currentDateTime = _dateTimeProvider.Now;
             var shouldFireAt = QuickNotification.TimeFormat switch  
             {
                 NotifyMeEnums.QuickNotificationTimeFormat.Minutes => currentDateTime.AddMinutes(QuickNotification.RequestedTime),
