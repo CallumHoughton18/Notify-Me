@@ -24,6 +24,7 @@ using notifyme.server.Data;
 using notifyme.server.Services;
 using notifyme.shared.Models;
 using notifyme.shared.RepositoryInterfaces;
+using notifyme.shared.Service_Implementations;
 using notifyme.shared.ServiceInterfaces;
 using notifyme.shared.ViewModels;
 using Quartz;
@@ -55,6 +56,7 @@ namespace notifyme.server
                 .AddDefaultTokenProviders();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ICronExpressionBuilder, CronExpressionBuilder>();
+            services.AddScoped<IDateTimeProvider, DateTimeProvider>();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<AppUser>>();
             services.AddSingleton<WeatherForecastService>();
             services.AddScoped<CreateNewNotificationViewModel>();
