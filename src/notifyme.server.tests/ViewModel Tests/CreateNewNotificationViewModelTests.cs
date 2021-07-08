@@ -72,17 +72,16 @@ namespace notifyme.server.tests.ViewModel_Tests
 
         [Theory]
         [ClassData(typeof(InvalidQuickNotificationData))]
-        public async Task Should_Not_Save_Notification_With_Missing_Values(QuickNotification invalidNotification)
+        public async Task Should_Not_Save_Notification_With_Invalid_Values(QuickNotification invalidNotification)
         {
             var (pushSubMock, notificationSchedulerMock, savedNotifRepoMock, authServiceMock, dateTimeMock) =
                 CreateSutDependencies(x => { });
 
             var sut = new CreateNewNotificationViewModel(pushSubMock.Object, notificationSchedulerMock.Object,
-                new CronExpressionBuilder(), savedNotifRepoMock.Object, authServiceMock.Object, dateTimeMock.Object);
-
-            sut.QuickNotification.Body = MockNotificationBody;
-            sut.QuickNotification.RequestedTime = 5;
-            sut.QuickNotification.TimeFormat = NotifyMeEnums.QuickNotificationTimeFormat.Days;
+                new CronExpressionBuilder(), savedNotifRepoMock.Object, authServiceMock.Object, dateTimeMock.Object)
+            {
+                QuickNotification = invalidNotification
+            };
 
             await Assert.ThrowsAsync<ValidationException>(async () =>
             {
