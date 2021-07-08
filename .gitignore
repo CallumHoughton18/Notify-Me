@@ -388,5 +388,12 @@ FodyWeavers.xsd
 *.sln.iml
 
 # Temporarily disable appsettings.json added to code repo to hide secrets
-appsettings.json
 appsettings.Development.json
+appsettings.Production.json
+
+# Local DB stores
+src/notifyme.server/Data Stores/NotifyMeDB.db
+src/notifyme.server/Data Stores/jobstore.db
+
+# Finder info for mac
+.DS_Store
