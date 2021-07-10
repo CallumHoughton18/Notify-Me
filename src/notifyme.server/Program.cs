@@ -18,7 +18,8 @@ namespace notifyme.server
         public static async Task Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            
+            host.CreateDatabase<NotifyMeContext>();
+
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;

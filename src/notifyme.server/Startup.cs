@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using System.IO;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -48,7 +42,7 @@ namespace notifyme.server
             services.AddServerSideBlazor();
             services.AddMudServices();
             services.AddRouting();
-            services.AddDbContextFactory<NotifyMeContext>(opt => opt.UseSqlite($"Data Source=Data Stores/{NotifyMeContext.DB_NAME}.db"));
+            services.AddDbContextFactory<NotifyMeContext>(opt => opt.UseSqlite(Configuration.GetConnectionString("NotifyMeDB")));
             services.AddScoped(p => p.GetRequiredService<IDbContextFactory<NotifyMeContext>>().CreateDbContext());
             services.AddIdentity<AppUser, IdentityRole>()
                 .AddDefaultUI()
@@ -78,7 +72,15 @@ namespace notifyme.server
 
         private void ConfigureJobScheduler(IServiceCollection services)
         {
-            services.Configure<QuartzOptions>(Configuration.GetSection("Quartz"));
+            var config = Configuration.GetSection("Quartz");
+            if(config["quartz.jobStore.driverDelegateType"] == "Quartz.Impl.AdoJobStore.SQLiteDelegate, Quartz")
+            {
+                if (!File.Exists(config["SQLiteDataSourcePath"]))
+                {
+                    File.Copy(config["SQLiteDataSourceTemplatePath"], config["SQLiteDataSourcePath"]);
+                }
+            }
+            services.Configure<QuartzOptions>(config);
             services.AddQuartz(q =>
             {
                 q.UseMicrosoftDependencyInjectionJobFactory();
