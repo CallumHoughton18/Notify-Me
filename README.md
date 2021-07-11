@@ -45,7 +45,13 @@ You should be able to clone the repository and then within the notifyme.server p
     "publicKey": "{VAPIDPUBLICKEY}",
     "privateKey": "{VAPIDPRIVATEKET}"
   },
+  },
+  "ConnectionStrings": {
+    "NotifyMeDB": "{NOTIFYMEDBCONNECTIONSTRING}"
+  },
   "Quartz": {
+    "SQLiteDataSourcePath": "{PATHTOJOBLOCALDB}",
+    "SQLiteDataSourceTemplatePath": "Data Stores/jobstore-template.db",
     "quartz.scheduler.instanceName": "NotifyMeScheduler",
     "quartz.threadPool.maxConcurrency": "3",
     "quartz.serializer.type": "json",
@@ -62,11 +68,9 @@ You should be able to clone the repository and then within the notifyme.server p
 }
 ```
 
-Then, copy and paste the `Data Stores/jobstore-template.db` file and rename it to `Data Stores/jobstore.db`. This sets up the local SQLite development database for Quartz.NET to save its jobs.
+The app should be configured to use a SQLite DB for both the Quartz.NET job store and for the NotifyMe apps database. On running the app for the first time both databases will be created automatically and migrations will be applied.
 
-Before starting the app run:
-`dotnet ef database update --context notifymecontext -p ../notifyme.infrastructure/notifyme.infrastructure.`
-Which will generating a `Data Stores/NotifyMeDB.db` SQLite development database and apply the migrations. And will seed this with an admin user with the login:
+The NotifyMeDB will be seeded with with an admin user with the login:
 UserName: admin@test.com
 Email: admin@test.com
 Password: Ch@ngeMe1!
