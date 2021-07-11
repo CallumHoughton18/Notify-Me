@@ -68,7 +68,11 @@ You should be able to clone the repository and then within the notifyme.server p
 }
 ```
 
+<<<<<<< HEAD
 The app should be configured to use a SQLite DB for both the Quartz.NET job store and for the NotifyMe apps database. On running the app for the first time both databases will be created automatically and migrations will be applied.
+=======
+The app should be configured to use a SQLite DB for both the Quartz.NET job store and for the NotifyMe apps database. On running the app for the first time both databases will be created automatically.
+>>>>>>> 47034c3 (update readme with updated setup documentation in regarded to DB)
 
 The NotifyMeDB will be seeded with with an admin user with the login:
 UserName: admin@test.com
