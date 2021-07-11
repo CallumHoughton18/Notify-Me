@@ -50,7 +50,7 @@ You should be able to clone the repository and then within the notifyme.server p
     "NotifyMeDB": "{NOTIFYMEDBCONNECTIONSTRING}"
   },
   "Quartz": {
-    "SQLiteDataSourcePath": "{PATHTOJOBLOCALDB}",
+    "SQLiteDataSourcePath": "Data Stores/jobstore.db",
     "SQLiteDataSourceTemplatePath": "Data Stores/jobstore-template.db",
     "quartz.scheduler.instanceName": "NotifyMeScheduler",
     "quartz.threadPool.maxConcurrency": "3",
@@ -68,11 +68,9 @@ You should be able to clone the repository and then within the notifyme.server p
 }
 ```
 
-<<<<<<< HEAD
 The app should be configured to use a SQLite DB for both the Quartz.NET job store and for the NotifyMe apps database. On running the app for the first time both databases will be created automatically and migrations will be applied.
-=======
-The app should be configured to use a SQLite DB for both the Quartz.NET job store and for the NotifyMe apps database. On running the app for the first time both databases will be created automatically.
->>>>>>> 47034c3 (update readme with updated setup documentation in regarded to DB)
+
+Make sure that the "SQLiteDataSourcePath" configuration in the Quartz section of `appsettingss.Development.json` matches the connection string in "quartz.dataSource.jobstore.connectionString".
 
 The NotifyMeDB will be seeded with with an admin user with the login:
 UserName: admin@test.com
