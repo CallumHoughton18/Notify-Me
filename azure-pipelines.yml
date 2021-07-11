@@ -16,11 +16,13 @@ steps:
 - task: DotNetCoreCLI@2
   displayName: 'Restore'
   inputs:
+    projects: '**/notifyme.server.csproj'
     command: 'restore'
     includeNuGetOrg: true
 
 - task: DotNetCoreCLI@2
   inputs:
+    projects: '**/notifyme.server.csproj'
     command: 'build'
     arguments: '--configuration $(buildConfiguration)'
   displayName: 'dotnet build $(buildConfiguration)'
