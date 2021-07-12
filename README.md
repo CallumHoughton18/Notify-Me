@@ -51,7 +51,7 @@ You should be able to clone the repository and then within the notifyme.server p
   },
   "Quartz": {
     "SQLiteDataSourcePath": "Data Stores/jobstore.db",
-    "SQLiteDataSourceTemplatePath": "Data Stores/jobstore-template.db",
+    "SQLiteDataSourceTemplatePath": "../notifyme.scheduler/DB Templates/jobstore-template.db",
     "quartz.scheduler.instanceName": "NotifyMeScheduler",
     "quartz.threadPool.maxConcurrency": "3",
     "quartz.serializer.type": "json",

@@ -10,6 +10,7 @@
     <None Remove="Quartz.Serialization.Json" />
     <None Remove="Database Scripts\" />
     <None Remove="Factories\" />
+    <None Remove="DB Templates\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Quartz" Version="3.3.2" />
@@ -18,8 +19,14 @@
   <ItemGroup>
     <Folder Include="Jobs\" />
     <Folder Include="Database Scripts\" />
+    <Folder Include="DB Templates\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\notifyme.shared\notifyme.shared.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="DB Templates\jobstore-template.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

@@ -77,6 +77,8 @@ namespace notifyme.server
             {
                 if (!File.Exists(config["SQLiteDataSourcePath"]))
                 {
+                    var dataStoresDir = Path.GetDirectoryName(config["SQLiteDataSourcePath"]);
+                    Directory.CreateDirectory(dataStoresDir);
                     File.Copy(config["SQLiteDataSourceTemplatePath"], config["SQLiteDataSourcePath"]);
                 }
             }

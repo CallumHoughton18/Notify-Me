@@ -6,5 +6,5 @@ services:
     build:
       context: .
       dockerfile: src/notifyme.server/Dockerfile
-    ports:
-      - 5000:5000
+    volumes:
+      - /var/notifymeapp/Data Stores:/app/Data Stores

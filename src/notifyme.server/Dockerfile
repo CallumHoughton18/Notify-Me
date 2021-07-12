@@ -25,6 +25,5 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 USER root
-RUN chown -R appuser '/app/Data Stores'
-USER appuser
+RUN chown -R appuser '/app/DB Templates'
 ENTRYPOINT ["dotnet", "notifyme.server.dll"]
