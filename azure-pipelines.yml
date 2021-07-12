@@ -10,6 +10,16 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: DownloadSecureFile@1
+  name: appsettingsProductionJsonFile
+  displayName: 'Download appsettings.Production.json'
+  inputs:
+    secureFile: 'notifyme.appsettings.Production.json'
+
+- script: |
+    echo copying $(appsettingsProductionJsonFile.secureFilePath) to notifyme.server...
+    sudo cp $(appsettingsProductionJsonFile.secureFilePath) $(Build.ArtifactStagingDirectory)/src/notifyme.server/appsettings.Production.json
+
 - task: DotNetCoreCLI@2
   displayName: 'Restore'
   inputs:
