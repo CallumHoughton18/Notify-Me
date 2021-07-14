@@ -8,6 +8,11 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
+  VAPID.subject: ''
+  VAPID.publicKey: ''
+  VAPID.privateKey:''
+  ConnectionStrings.NotifyMeDB: ''
+  Quartz.SQLiteDataSourceTemplatePath: ''
 
 steps:
 - task: DotNetCoreCLI@2
@@ -16,6 +21,13 @@ steps:
     projects: '**/notifyme.server.csproj'
     command: 'restore'
     includeNuGetOrg: true
+
+- task: FileTransform@1
+  displayName: 'File transformation: appsettings.json'
+  inputs:
+    folderPath: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    targetFiles: '**/appsettings.json'
+    fileType: json
 
 - task: DotNetCoreCLI@2
   inputs:
