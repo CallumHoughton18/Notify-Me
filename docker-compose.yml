@@ -2,9 +2,15 @@ version: '3.4'
 
 services:
   notifymeserver:
+    user: appuser
     image: notifymeserver
+    ports:
+      - 5000:5000
     build:
       context: .
       dockerfile: src/notifyme.server/Dockerfile
     volumes:
-      - /var/notifymeapp/Data Stores:/app/Data Stores
+      - notifymeappdata:/app/Data Stores
+
+volumes:
+  notifymeappdata:

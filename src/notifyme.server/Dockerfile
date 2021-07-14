@@ -24,6 +24,6 @@ RUN dotnet publish "notifyme.server.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-USER root
-RUN chown -R appuser '/app/DB Templates'
+RUN mkdir "/app/Data Stores"
+RUN chmod -R 777 "/app/Data Stores"
 ENTRYPOINT ["dotnet", "notifyme.server.dll"]
