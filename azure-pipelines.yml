@@ -25,7 +25,7 @@ steps:
 - task: FileTransform@1
   displayName: 'File transformation: appsettings.json'
   inputs:
-    folderPath: '$(Build.ArtifactStagingDirectory)/src/notifyme.server'
+    folderPath: '$(System.DefaultWorkingDirectory)'
     targetFiles: '**/appsettings.json'
     fileType: json
 
