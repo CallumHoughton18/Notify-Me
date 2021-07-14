@@ -10,7 +10,7 @@ variables:
   buildConfiguration: 'Release'
   VAPID.subject: ''
   VAPID.publicKey: ''
-  VAPID.privateKey:''
+  VAPID.privateKey: ''
   ConnectionStrings.NotifyMeDB: ''
   Quartz.SQLiteDataSourceTemplatePath: ''
 
