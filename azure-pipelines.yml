@@ -50,6 +50,12 @@ steps:
   displayName: 'Publishing Build Artifacts...'
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
 
+- task: Docker@2
+  displayName: "Logging into DockerHub..."
+  inputs:
+    containerRegistry: 'Personal DockerHub'
+    command: 'login'
+
 - task: DockerCompose@0
   displayName: 'Building sevices via Docker-Compose...'
   inputs:
