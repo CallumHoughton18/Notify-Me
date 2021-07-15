@@ -60,3 +60,12 @@ steps:
     additionalImageTags: '$(Build.BuildId)'
     includeLatestTag: true
 
+- task: DockerCompose@0
+  displayName: 'Pushing sevices via Docker-Compose...'
+  inputs:
+    containerregistrytype: 'Container Registry'
+    dockerRegistryEndpoint: 'Personal DockerHub'
+    dockerComposeFile: '**/docker-compose.yml'
+    action: 'Push services'
+    additionalImageTags: '$(Build.BuildId)'
+    includeLatestTag: true
