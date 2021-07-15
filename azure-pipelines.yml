@@ -6,7 +6,7 @@ variables:
   VAPID.subject: $(vapidSubject)
   VAPID.publicKey: $(vapidPublicKey)
   VAPID.privateKey: $(vapidPrivateKey)
-  ConnectionStrings.NotifyMeDB: $(quartzDbTemplatePath)
+  ConnectionStrings.NotifyMeDB: $(notifyMeDBConn)
   Quartz.SQLiteDataSourceTemplatePath: $(quartzDbTemplatePath)
 
 steps:
