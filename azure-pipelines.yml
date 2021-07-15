@@ -48,3 +48,4 @@ steps:
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publishing Build Artifacts...'
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
