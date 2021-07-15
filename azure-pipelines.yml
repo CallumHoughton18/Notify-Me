@@ -67,5 +67,6 @@ steps:
     dockerRegistryEndpoint: 'Personal DockerHub'
     dockerComposeFile: '**/docker-compose.yml'
     action: 'Push services'
+    qualifyImageNames: true
     additionalImageTags: '$(Build.BuildId)'
     includeLatestTag: true
