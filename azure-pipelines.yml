@@ -38,6 +38,15 @@ steps:
     testRunTitle: 'Run Tests'
   displayName: test
 
+- task: Docker@2
+  displayName: Build NotifyMe.Server image
+  inputs:
+    repository: NotifyMe
+    command: build
+    Dockerfile: $(Build.SourcesDirectory)/src/notifyme.server/Dockerfile
+    tags: |
+            $(Build.BuildId)
+
 - task: DotNetCoreCLI@2
   displayName: 'Publishing App...'
   inputs:
@@ -49,3 +58,4 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publishing Build Artifacts...'
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+
