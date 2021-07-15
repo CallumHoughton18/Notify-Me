@@ -1,13 +1,13 @@
-# ASP.NET Core (.NET Framework)
-# Build and test ASP.NET Core projects targeting the full .NET Framework.
-# Add steps that publish symbols, save build artifacts, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
-
 pool:
   vmImage: 'ubuntu-latest'
 
 variables:
   buildConfiguration: 'Release'
+  VAPID.subject: $(vapidSubject)
+  VAPID.publicKey: $(vapidPublicKey)
+  VAPID.privateKey: $(vapidPrivateKey)
+  ConnectionStrings.NotifyMeDB: $(notifyMeDBConn)
+  Quartz.SQLiteDataSourceTemplatePath: $(quartzDbTemplatePath)
 
 steps:
 - task: DotNetCoreCLI@2
@@ -17,16 +17,35 @@ steps:
     command: 'restore'
     includeNuGetOrg: true
 
+- task: FileTransform@1
+  displayName: 'File transformation: appsettings.json'
+  inputs:
+    folderPath: '$(System.DefaultWorkingDirectory)'
+    targetFiles: '**/appsettings.json'
+    fileType: json
+
 - task: DotNetCoreCLI@2
   inputs:
     projects: '**/notifyme.server.csproj'
     command: 'build'
     arguments: '--configuration $(buildConfiguration)'
   displayName: 'dotnet build $(buildConfiguration)'
-  
+
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
     projects: '**/notifyme.server.tests.csproj'
     testRunTitle: 'Run Tests'
   displayName: test
+
+- task: DotNetCoreCLI@2
+  displayName: 'Publishing App...'
+  inputs:
+    command: publish
+    publishWebProjects: true
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: false
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publishing Build Artifacts...'
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
