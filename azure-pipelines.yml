@@ -76,4 +76,4 @@ steps:
     qualifyImageNames: true
     additionalImageTags: '$(Build.BuildId)'
     includeLatestTag: true
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
