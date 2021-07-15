@@ -3,7 +3,7 @@ version: '3.4'
 services:
   notifymeserver:
     user: appuser
-    image: notifymeserver
+    image: callumhoughton22/notifymeserver
     ports:
       - 5000:5000
     build:
