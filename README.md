@@ -1,4 +1,10 @@
-# NotifyMe.App - An Open Source, Self-Hostable, And Cross-Platform Notifications Solution
+# NotifyMe.App - An Open Source, Self-Hostable, Progressive Web App Notifications Solution
+
+[![Build Status](https://dev.azure.com/callumhoughton13/callumhoughton13/_apis/build/status/CallumHoughton18.Notify-Me?branchName=master)](https://dev.azure.com/callumhoughton13/callumhoughton13/_build/latest?definitionId=8&branchName=master)
+![Azure DevOps tests](https://img.shields.io/azure-devops/tests/callumhoughton13/callumhoughton13/8)
+![Docker Image Size (tag)](https://img.shields.io/docker/image-size/callumhoughton22/notifymeserver/latest)
+
+**Demo at: notifymeapp.callums-stuff.net**
 
 <!-- vscode-markdown-toc -->
 * 1. [Introduction](#Introduction)
@@ -23,7 +29,9 @@
 
 NotifyMe.App is a blazor server app that is focused on providing a self-hostable open source solution that allows users to save and schedule notifications that can be sent to any device which supports web push notifications.
 
-It also demonstrates how a more complicated progessive web application can be created using Blazor that interops with modern TypeScript/JavaScript web functionality that can't be done in pure C#.
+A demo of the application is hosted at [notifymeapp.callums-stuff.net](https://notifymeapp.callums-stuff.net). This demo is built on every commit to the master branch rather than on each stable release, so could be prone to bugs.
+
+It also demonstrates how a more complicated progessive web application can be created using Blazor that interops with modern JavaScript (transpiled from TypeScript) web functionality that can't be done in pure C#.
 
 The app is currently in active development, with the intention of integrating with the Pushy.App web API to support iOS devices.
 
@@ -80,6 +88,33 @@ Password: Ch@ngeMe1!
 You can change this, but as this is for development only it shouldn't matter.
 
 You should be able to run the NotifyMe app, login, and start using it.
+
+## Self-Hosting
+
+The docker image is available on [Docker Hub](https://hub.docker.com/r/callumhoughton22/notifymeserver), and can be easily ran either from the command line or via docker-compose like:
+
+```yaml
+version: '3.4'
+
+services:
+  notifymeserver:
+    user: appuser
+    image: callumhoughton22/notifymeserver:latest
+    networks:
+        - reverse-proxy-network
+    volumes:
+      - notifymeappdata:/app/Data Stores
+
+volumes:
+  notifymeappdata:
+
+networks:
+    reverse-proxy-network:
+        external: true
+
+```
+
+Which shows how the application can be ran and exposed via the reverse proxy network, the container interally runs the app on port 5000 so the reverse proxy will have to be setup to account for this.
 
 ## 2. <a name='Architecture'></a>Architecture
 
