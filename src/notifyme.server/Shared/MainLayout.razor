@@ -1,5 +1,5 @@
 ﻿@inherits LayoutComponentBase
-<MudThemeProvider/>
+<MudThemeProvider Theme="NeutralBlueTheme"/>
 <MudLayout>
     <AppBar OnDrawButtonClick="DrawerToggle"></AppBar>
     <AuthorizeView>
@@ -16,7 +16,25 @@
 </MudLayout>
 
 @code {
-    public bool DrawerOpen { get; set; } = true;
+    public bool DrawerOpen { get; set; }
+
+    MudTheme NeutralBlueTheme = new MudTheme()
+    {
+        Palette = new Palette()
+        {
+            Primary = "#c6ad8f",
+            AppbarText = "#f5f5f5",
+            Secondary = "#425664",
+            AppbarBackground = "#425664",
+            Background = "#f6f4f2",
+            DrawerBackground = "#f6f4f2",
+            Surface = "#f6f4f2",
+            Error = "#823e4c",
+            Warning = "#eb9a28",
+            Success = "#445a35"
+
+        }
+    };
 
     void DrawerToggle()
     {
