@@ -1,10 +1,15 @@
 ﻿@inherits LayoutComponentBase
-<MudThemeProvider Theme="NeutralBlueTheme"/>
+<MudThemeProvider Theme="NeutralBlueTheme" />
 <MudLayout>
     <AppBar OnDrawButtonClick="DrawerToggle"></AppBar>
     <AuthorizeView>
         <Authorized>
-            <AppNavigationDraws DrawerOpen="DrawerOpen" UserName="@context.User.Identity.Name"></AppNavigationDraws>
+            <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="1" Style="font-size: medium">
+                <MudDrawerHeader>
+                    <MudText Typo="Typo.h5">@context.User.Identity.Name</MudText>
+                </MudDrawerHeader>
+                <AppNavigationLinks></AppNavigationLinks>
+            </MudDrawer>
         </Authorized>
         <NotAuthorized>
             <RedirectToLogin></RedirectToLogin>
@@ -16,7 +21,7 @@
 </MudLayout>
 
 @code {
-    public bool DrawerOpen { get; set; }
+    public bool _drawerOpen = false;
 
     MudTheme NeutralBlueTheme = new MudTheme()
     {
@@ -38,7 +43,6 @@
 
     void DrawerToggle()
     {
-        DrawerOpen = !DrawerOpen;
+        _drawerOpen = !_drawerOpen;
     }
-
 }

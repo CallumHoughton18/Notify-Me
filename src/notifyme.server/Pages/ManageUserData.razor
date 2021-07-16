@@ -3,22 +3,39 @@
 @using notifyme.server.Shared.Manage_Notifications
 @using notifyme.server.Shared.Manage_Subscriptions
 
-@inject ManageUserDataViewModel _manageVm;  
+@inject ManageUserDataViewModel _manageVm;
 @inherits notifyme.server.Components.BaseMVVMComponent
 
 <MudText Typo="Typo.h4" Class="mb-5">Manage Notifications</MudText>
-<NotificationsTable Notifications="_manageVm.Notifications"
+@if (_manageVm.Notifications.Count != 0)
+{
+    <NotificationsTable Notifications="_manageVm.Notifications"
                     @bind-SelectedNotification="_manageVm.SelectedNotification"
                     Class="mb-5"
                     SaveSelectedNotification="@_manageVm.SaveSelectedNotification"
-                    DeleteSelectedNotification="@(() => _manageVm.DeleteSelectedNotification())"/>
+                    DeleteSelectedNotification="@(() => _manageVm.DeleteSelectedNotification())" />
+}
+else
+{
+    <MudText>No Notifications Found...</MudText>
+}
 
-<SubscriptionsTable Subscriptions="_manageVm.Subscriptions" 
-                    @bind-SelectedSubscription="_manageVm.SelectedSubscription"
-                    SavedSelectedSubscription="@_manageVm.SaveSelectedSubscription"
-                    DeleteSelectedSubscription="@(() => _manageVm.DeleteSelectedSubscription())"/>
 
-<LoadingOverlay IsLoadingState="@_manageVm.IsLoading" ></LoadingOverlay>
+<MudText Typo="Typo.h4" Class="mt-10 mb-5">Manage Subscriptions</MudText>
+@if (_manageVm.Subscriptions.Count != 0)
+{
+    <SubscriptionsTable Subscriptions="_manageVm.Subscriptions"
+                        @bind-SelectedSubscription="_manageVm.SelectedSubscription"
+                        SavedSelectedSubscription="@_manageVm.SaveSelectedSubscription"
+                        DeleteSelectedSubscription="@(() => _manageVm.DeleteSelectedSubscription())" />
+
+}
+else
+{
+    <MudText>No Subscriptions Found...</MudText>
+}
+
+<LoadingOverlay IsLoadingState="@_manageVm.IsLoading"></LoadingOverlay>
 
 @code {
     protected override Task OnInitializedAsync()

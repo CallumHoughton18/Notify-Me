@@ -8,14 +8,16 @@
 
 <!-- vscode-markdown-toc -->
 * 1. [Introduction](#Introduction)
-* 2. [Architecture](#Architecture)
-  * 2.1. [Reusability](#Reusability)
-  * 2.2. [Notification Scheduling](#NotificationScheduling)
-  * 2.3. [Databases and Storage](#DatabasesandStorage)
-  * 2.4. [Authentication and Authorization](#AuthenticationandAuthorization)
-  * 2.5. [User Interface](#UserInterface)
-  * 2.6. [TypeScript Integration](#TypeScriptIntegration)
-* 3. [Creating and Updating Migrations](#CreatingandUpdatingMigrations)
+* 2. [Self-Hosting](#Self-Hosting)
+* 3. [Architecture](#Architecture)
+  * 3.1. [Reusability](#Reusability)
+    * 3.2. [Notification Scheduling](#NotificationScheduling)
+    * 3.3. [Databases and Storage](#DatabasesandStorage)
+    * 3.4. [Authentication and Authorization](#AuthenticationandAuthorization)
+    * 3.5. [User Interface](#UserInterface)
+    * 3.6. [TypeScript Integration](#TypeScriptIntegration)
+* 4. [Creating and Updating Migrations](#CreatingandUpdatingMigrations)
+* 5. [4. Known Issues](#KnownIssues)
 
 <!-- vscode-markdown-toc-config
 	numbering=true
@@ -89,7 +91,7 @@ You can change this, but as this is for development only it shouldn't matter.
 
 You should be able to run the NotifyMe app, login, and start using it.
 
-## Self-Hosting
+## 2. <a name='Self-Hosting'></a>Self-Hosting
 
 The docker image is available on [Docker Hub](https://hub.docker.com/r/callumhoughton22/notifymeserver), and can be easily ran either from the command line or via docker-compose like:
 
@@ -116,42 +118,46 @@ networks:
 
 Which shows how the application can be ran and exposed via the reverse proxy network, the container interally runs the app on port 5000 so the reverse proxy will have to be setup to account for this.
 
-## 2. <a name='Architecture'></a>Architecture
+## 3. <a name='Architecture'></a>Architecture
 
 The app has been architectured attempting to follow the best practices outlined for ASP.NET and Blazor applications, and mirrors [how other sample applications have been setup](https://github.com/dotnet-architecture/eShopOnWeb).
 
 The app uses the MVVM design pattern along with the built in dependency injection provided by ASP.NET and so shouldn't be too difficult to follow.
 
-### 2.1. <a name='Reusability'></a>Reusability
+### 3.1. <a name='Reusability'></a>Reusability
 
 A lot of the code for this project is within the notifyme.shared project which is a .NET Standard project, and so can be reused. The ViewModel code and service interfaces are all defined here.
 
-### 2.2. <a name='NotificationScheduling'></a>Notification Scheduling
+### 3.2. <a name='NotificationScheduling'></a>Notification Scheduling
 
 The app uses Quartz.NET to schedule jobs that when ran will push saved notifications to all the users registered browsers any their devices, the notifyme.scheduler project demonstrates how this is done, and is sandboxed into using its own database.
 
-### 2.3. <a name='DatabasesandStorage'></a>Databases and Storage
+### 3.3. <a name='DatabasesandStorage'></a>Databases and Storage
 
 The app uses Entity Framework Core for data storage, and for development is configured using SQLite. Realistically as the userbase for a self hosted app should be small, the production application could also be configured using SQLite.
 
-### 2.4. <a name='AuthenticationandAuthorization'></a>Authentication and Authorization
+### 3.4. <a name='AuthenticationandAuthorization'></a>Authentication and Authorization
 
 The app uses ASP.NET Core Identity for user management as this integrates well with Blazor. The identity database is set to be the same as the current development database (`NotifyMeDB.db`) to keep it simple.
 
-### 2.5. <a name='UserInterface'></a>User Interface
+### 3.5. <a name='UserInterface'></a>User Interface
 
 The UI is designed using the [MudBlazor library](https://mudblazor.com/). Common UI elements should be broken down into components, and are stored within the Shared directory in the notifyme.server project.
 
-### 2.6. <a name='TypeScriptIntegration'></a>TypeScript Integration
+### 3.6. <a name='TypeScriptIntegration'></a>TypeScript Integration
 
 The application is setup to use TypeScript, which on each build converts and deploys any TypeScript code in the `notifyme.server/Scripts` directory into `notifyme.server/wwwroot/js`. The relevant JavaScript functions can then be called using JSInterop in Blazor.
 
 The TypeScript required for the project should be kept to a minimum and should be organized into modules, like how it is done within `PushNotification.ts`.
 
-## 3. <a name='CreatingandUpdatingMigrations'></a>Creating and Updating Migrations
+## 4. <a name='CreatingandUpdatingMigrations'></a>Creating and Updating Migrations
 
 from the notifyme.server directory run:
 
 `dotnet ef migrations add MIGRATIONAME --context notifymecontext -p ../notifyme.infrastructure/notifyme.infrastructure.csproj -s notifyme.server.csproj -o Data/Migrations`
 
 `dotnet ef database update --context notifymecontext -p ../notifyme.infrastructure/notifyme.infrastructure.csproj -s notifyme.server.csproj`
+
+## 5. <a name='KnownIssues'></a>4. Known Issues
+
+Currently, PWA Push Notifications are not available on iOS, and so this application will not work on iOS devices. There are also [known web push notification issues on FireFox for Android](https://github.com/mozilla-mobile/fenix/issues/19152). So it is advised to use Chrome for Android for the time being to setup push notifications. Incredibly annoying I know.

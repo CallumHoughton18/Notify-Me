@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 export const checkAndRequestNotificationPermission = () => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(Notification.permission);
     if (Notification.permission !== "granted") {
         const hasPermission = yield Notification.requestPermission();
         return hasPermission === "granted";
