@@ -8,7 +8,7 @@
     <MudTextField Label="Notification Body" @bind-Value="NewNotification.Body" For="@(() => NewNotification.Body)" Class="mb-2"  />
     <MudNumericField Label="Time" @bind-Value="NewNotification.RequestedTime" Variant="Variant.Text" For="@(() => NewNotification.RequestedTime)" Class="mb-2"  />
         <MudItem xs="12" sm="6" md="4" Class="mb-2">
-            <MudSelect T="NotifyMeEnums.QuickNotificationTimeFormat" Label="Time Format" Strict="true" Variant="Variant.Outlined" ToStringFunc="@_converter">
+            <MudSelect T="NotifyMeEnums.QuickNotificationTimeFormat" Label="Time Format" Strict="true" Variant="Variant.Outlined" ToStringFunc="@_converter" @bind-Value="NewNotification.TimeFormat">
                 @{ var timeFormats = Enum.GetValues<NotifyMeEnums.QuickNotificationTimeFormat>();}
                 @foreach (var timeFormat in timeFormats)
                 {
