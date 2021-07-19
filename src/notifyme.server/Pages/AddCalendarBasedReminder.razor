@@ -1,0 +1,23 @@
+@page "/addcalendarreminder"
+
+@using notifyme.server.Shared.Manage_Notifications
+
+<div style="width: 100%">
+    <MudPaper Class="pa-8 mt-5">
+        <AddCalendarNotificationForm CalendarNotification="@notification" OnSubmit="@HandleSubmit" />
+    </MudPaper>
+</div>
+
+@code {
+    public CalendarNotification notification { get; set; } = new();
+
+    protected override Task OnInitializedAsync()
+    {
+        //BindViewModelToLifeCycle(_createNotifVm);
+        return base.OnInitializedAsync();
+    }
+    private void HandleSubmit()
+    {
+        //_createNotifVm.SaveNotification();
+    }
+}

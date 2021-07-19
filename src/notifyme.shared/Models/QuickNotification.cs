@@ -11,7 +11,7 @@ namespace notifyme.shared.Models
         public string Body { get; set; }
 
         [Required(ErrorMessage = "Requested time is required")] 
-        [Range(1, 1000, ErrorMessage = "Requested time must be between 1 and 1000")] 
+        [Range(1, 1000, ErrorMessage = "Requested time must be between 1 and 1000, and a whole number")] 
         public int RequestedTime { get; set; } = 1;
 
         [Required(ErrorMessage = "Time format is required")]

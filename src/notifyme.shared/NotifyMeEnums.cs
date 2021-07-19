@@ -10,5 +10,13 @@ namespace notifyme.shared
             Hours,
             Days
         }
+
+        public enum CalendarNotificationRepeatFormat
+        {
+            None,
+            Weekly,
+            Monthly,
+            Yearly
+        }
     }
 }
