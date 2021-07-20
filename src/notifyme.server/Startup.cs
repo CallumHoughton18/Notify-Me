@@ -21,6 +21,7 @@ using notifyme.shared.RepositoryInterfaces;
 using notifyme.shared.Service_Implementations;
 using notifyme.shared.ServiceInterfaces;
 using notifyme.shared.ViewModels;
+using notifyme.shared.ViewModels.CreateNotification;
 using Quartz;
 
 namespace notifyme.server
@@ -53,7 +54,7 @@ namespace notifyme.server
             services.AddScoped<IDateTimeProvider, DateTimeProvider>();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<AppUser>>();
             services.AddSingleton<WeatherForecastService>();
-            services.AddScoped<CreateNewNotificationViewModel>();
+            services.AddScoped<CreateQuickNotificationViewModel>();
             services.AddScoped<ManageUserDataViewModel>();
             services.AddScoped<RegisterNotificationSubscriptionViewModel>();
             services.AddTransient<IPushNotificationSubscriberService, PushNotificationSubscriberService>();

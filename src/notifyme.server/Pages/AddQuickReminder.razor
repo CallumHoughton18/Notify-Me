@@ -1,9 +1,10 @@
 ﻿@page "/"
+@using notifyme.shared.ViewModels.CreateNotification
 @using notifyme.shared.ViewModels
 @using notifyme.server.Components
 @using notifyme.server.Shared.Manage_Notifications
 @using notifyme.server.Shared.Manage_Subscriptions
-@inject CreateNewNotificationViewModel _createNotifVm;  
+@inject CreateQuickNotificationViewModel  _createNotifVm;  
 @inject RegisterNotificationSubscriptionViewModel _subToNotifVm;
 @inherits BaseMVVMComponent
 @inject IDialogService DialogService
