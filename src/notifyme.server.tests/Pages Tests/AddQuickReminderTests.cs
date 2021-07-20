@@ -11,6 +11,7 @@ using notifyme.shared.Models.DataStore_Models;
 using notifyme.shared.RepositoryInterfaces;
 using notifyme.shared.ServiceInterfaces;
 using notifyme.shared.ViewModels;
+using notifyme.shared.ViewModels.CreateNotification;
 using Xunit;
 
 namespace notifyme.server.tests.Pages_Tests
@@ -27,7 +28,7 @@ namespace notifyme.server.tests.Pages_Tests
             var authServiceMock = new Mock<IAuthService>(MockBehavior.Loose);
             var dateTimeMock = new Mock<IDateTimeProvider>(MockBehavior.Loose);
 
-            var vm = new CreateNewNotificationViewModel(pushSubMock.Object,
+            var vm = new CreateQuickNotificationViewModel(pushSubMock.Object,
                 schedulerMock.Object, new CronExpressionBuilder(), notifRepoMock.Object, authServiceMock.Object,
                 dateTimeMock.Object);
 

@@ -10,7 +10,7 @@ using notifyme.shared;
 using notifyme.shared.Models;
 using notifyme.shared.Models.DataStore_Models;
 using notifyme.shared.ServiceInterfaces;
-using notifyme.shared.ViewModels;
+using notifyme.shared.ViewModels.CreateNotification;
 using Xunit;
 
 namespace notifyme.server.tests.ViewModel_Tests
@@ -54,7 +54,7 @@ namespace notifyme.server.tests.ViewModel_Tests
             var (pushSubMock, notificationSchedulerMock, savedNotifRepoMock, authServiceMock, dateTimeMock) =
                 CreateSutDependencies(x => savedNotification = x);
 
-            var sut = new CreateNewNotificationViewModel(pushSubMock.Object, notificationSchedulerMock.Object,
+            var sut = new CreateQuickNotificationViewModel(pushSubMock.Object, notificationSchedulerMock.Object,
                 new CronExpressionBuilder(), savedNotifRepoMock.Object, authServiceMock.Object, dateTimeMock.Object);
 
             sut.QuickNotification.Title = MockNotificationTitle;
@@ -77,7 +77,7 @@ namespace notifyme.server.tests.ViewModel_Tests
             var (pushSubMock, notificationSchedulerMock, savedNotifRepoMock, authServiceMock, dateTimeMock) =
                 CreateSutDependencies(x => { });
 
-            var sut = new CreateNewNotificationViewModel(pushSubMock.Object, notificationSchedulerMock.Object,
+            var sut = new CreateQuickNotificationViewModel(pushSubMock.Object, notificationSchedulerMock.Object,
                 new CronExpressionBuilder(), savedNotifRepoMock.Object, authServiceMock.Object, dateTimeMock.Object)
             {
                 QuickNotification = invalidNotification
