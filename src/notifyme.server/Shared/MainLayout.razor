@@ -1,4 +1,8 @@
-﻿@inherits LayoutComponentBase
+﻿@using notifyme.server.Shared.Manage_Subscriptions
+@using notifyme.shared.ViewModels
+@inherits LayoutComponentBase
+@inject RegisterNotificationSubscriptionViewModel _subToNotifVm;
+
 <MudThemeProvider Theme="NeutralBlueTheme" />
 <MudLayout>
     <AppBar OnDrawButtonClick="DrawerToggle"></AppBar>
@@ -6,10 +10,11 @@
         <Authorized>
             <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="1" Style="font-size: medium">
                 <MudDrawerHeader>
-                    <MudText Typo="Typo.h5">@context.User.Identity.Name</MudText>
+                    <MudText Typo="Typo.h6">@context.User.Identity.Name</MudText>
                 </MudDrawerHeader>
                 <AppNavigationLinks></AppNavigationLinks>
             </MudDrawer>
+            <AddSubscription ViewModel="_subToNotifVm"/>
         </Authorized>
         <NotAuthorized>
             <RedirectToLogin></RedirectToLogin>

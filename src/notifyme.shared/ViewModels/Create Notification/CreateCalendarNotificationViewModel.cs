@@ -37,6 +37,8 @@ namespace notifyme.shared.ViewModels.CreateNotification
         {
             var isValid = ValidationHelpers.ValidateModel(CalendarNotification);
             if (!isValid.ReturnBool) throw new ValidationException(isValid.ReturnString);
+            if (!CalendarNotification.FirstDateOccurance.HasValue) throw new ValidationException($"{nameof(CalendarNotification.FirstDateOccurance)} must have a value");
+            if (!CalendarNotification.FirstTimeOccurance.HasValue) throw new ValidationException($"{nameof(CalendarNotification.FirstTimeOccurance)} must have a value");
 
             var currentUser = await _authService.GetCurrentUserAsync();
             if (!CalendarNotification.FirstDateOccurance.HasValue && !CalendarNotification.FirstTimeOccurance.HasValue) return null;
@@ -53,6 +55,11 @@ namespace notifyme.shared.ViewModels.CreateNotification
                 CronJobString = _cronExpressionBuilder.RepeatableDateTimeToCronExpression(firstOccurance, CalendarNotification.RepeatFormat),
                 Repeat = isRepeatable
             };
+        }
+
+        protected override void ResetState()
+        {
+            CalendarNotification = new();
         }
     }
 }

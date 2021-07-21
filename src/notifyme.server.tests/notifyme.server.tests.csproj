@@ -25,4 +25,10 @@
     <ProjectReference Include="..\notifyme.server\notifyme.server.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="ViewModel Tests\Create Notification Tests\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModel Tests\Create Notification Tests\" />
+  </ItemGroup>
 </Project>

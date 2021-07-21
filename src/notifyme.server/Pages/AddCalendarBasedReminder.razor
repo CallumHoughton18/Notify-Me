@@ -1,23 +1,34 @@
 @page "/addcalendarreminder"
 
 @using notifyme.server.Shared.Manage_Notifications
+@using notifyme.shared.ViewModels.CreateNotification
+@using notifyme.server.Components
+
+@inject CreateCalendarNotificationViewModel  _createCalendarNotifVm;
+@inherits BaseMVVMComponent
+@inject IDialogService DialogService
+@inject ISnackbar Snackbar
 
 <div style="width: 100%">
     <MudPaper Class="pa-8 mt-5">
-        <AddCalendarNotificationForm CalendarNotification="@notification" OnSubmit="@HandleSubmit" />
+        <AddCalendarNotificationForm CalendarNotification="@_createCalendarNotifVm.CalendarNotification" OnSubmit="@HandleSubmit" />
     </MudPaper>
 </div>
 
 @code {
-    public CalendarNotification notification { get; set; } = new();
-
     protected override Task OnInitializedAsync()
     {
-        //BindViewModelToLifeCycle(_createNotifVm);
+        BindViewModelToLifeCycle(_createCalendarNotifVm);
         return base.OnInitializedAsync();
     }
-    private void HandleSubmit()
+
+    private async Task HandleSubmit()
     {
-        //_createNotifVm.SaveNotification();
+        var savedNotification = await _createCalendarNotifVm.SaveNotification();
+        if (savedNotification)
+        {
+            Snackbar.Add("Notification Saved", Severity.Success, (config) => { config.CloseAfterNavigation = true; });
+        }
+
     }
 }

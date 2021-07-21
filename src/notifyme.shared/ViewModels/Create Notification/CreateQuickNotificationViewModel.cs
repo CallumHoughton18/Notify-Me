@@ -59,5 +59,10 @@ namespace notifyme.shared.ViewModels.CreateNotification
                 Repeat = false
             };
         }
+
+        protected override void ResetState()
+        {
+            QuickNotification = new();
+        }
     }
 }

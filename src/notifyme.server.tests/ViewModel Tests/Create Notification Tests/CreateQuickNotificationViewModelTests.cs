@@ -6,6 +6,7 @@ using Moq;
 using notifyme.scheduler.Services;
 using notifyme.server.tests.Mocks;
 using notifyme.server.tests.Test_Data;
+using notifyme.server.tests.ViewModelTests.CreateNotificationTests;
 using notifyme.shared;
 using notifyme.shared.Models;
 using notifyme.shared.Models.DataStore_Models;
@@ -13,35 +14,10 @@ using notifyme.shared.ServiceInterfaces;
 using notifyme.shared.ViewModels.CreateNotification;
 using Xunit;
 
-namespace notifyme.server.tests.ViewModel_Tests
+namespace notifyme.server.tests.ViewModel_Tests.CreateNotificationTests
 {
-    public class CreateNewNotificationViewModelTests
+    public class CreateQuickNotificationViewModelTests : BaseCreateNotificationTests
     {
-        private readonly NotificationSubscription _notificationSubscriptionStub = new()
-            {EndPoint = "testEndPoint", AuthKey = "testAuthKey", P256hKey = "testKey"};
-
-        private const string MockUserName = "Admin";
-        private const string MockNotificationTitle = "NotificationTitle";
-        private const string MockNotificationBody = "Notificationbody";
-        private readonly DateTime _mockCurrentDateTime = new(2021, 1, 1, 12, 1, 1);
-
-        private (PushNotificationSubscriberServiceMock, NotificationSchedulerMock, NotificationRepositoryMock,
-            AuthServiceMock, Mock<IDateTimeProvider>) CreateSutDependencies(
-                Action<Notification> savedNotificationCallback)
-        {
-            var pushSubMock =
-                new PushNotificationSubscriberServiceMock().MockGetCurrentUserAndDeviceSubscription(
-                    (_notificationSubscriptionStub));
-            var notificationSchedularMock = new NotificationSchedulerMock();
-            var savedNotifRepoMock =
-                new NotificationRepositoryMock().MockAddOrUpdate(savedNotificationCallback);
-            var authServiceMock = new AuthServiceMock().MockGetCurrentUser(new User(MockUserName));
-            var mockDateTimeProvider = new Mock<IDateTimeProvider>();
-            mockDateTimeProvider.SetupGet(x => x.Now).Returns(_mockCurrentDateTime);
-
-            return (pushSubMock, notificationSchedularMock, savedNotifRepoMock, authServiceMock, mockDateTimeProvider);
-        }
-
         [Theory]
         [InlineData(NotifyMeEnums.QuickNotificationTimeFormat.Minutes, "1 6 12 1 1 ?")]
         [InlineData(NotifyMeEnums.QuickNotificationTimeFormat.Hours, "1 1 17 1 1 ?")]

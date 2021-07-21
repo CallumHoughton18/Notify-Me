@@ -23,10 +23,10 @@ namespace notifyme.scheduler.Services
                     cronExp = ToCronExpression.FromDateTime(dateTime);
                     break;
                 case NotifyMeEnums.CalendarNotificationRepeatFormat.Weekly:
-                    cronExp = CronScheduleBuilder.WeeklyOnDayAndHourAndMinute(dateTime.DayOfWeek, dateTime.Hour, dateTime.Minute).ToString();
+                    cronExp = ToCronExpression.WeeklyOnDayAndHourAndMinute(dateTime.DayOfWeek, dateTime.Hour, dateTime.Minute).ToString();
                     break;
                 case NotifyMeEnums.CalendarNotificationRepeatFormat.Monthly:
-                    cronExp = CronScheduleBuilder.MonthlyOnDayAndHourAndMinute(dateTime.Month, dateTime.Hour, dateTime.Minute).ToString();
+                    cronExp = ToCronExpression.MonthlyOnDayAndHourAndMinute(dateTime.Month, dateTime.Hour, dateTime.Minute).ToString();
                     break;
                 case NotifyMeEnums.CalendarNotificationRepeatFormat.Yearly:
                     cronExp = $"{dateTime.Second} {dateTime.Minute} {dateTime.Hour} {dateTime.Day} {dateTime.Month} ? *";

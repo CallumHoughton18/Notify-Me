@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MudBlazor;
 using MudBlazor.Services;
 using notifyme.infrastructure.Data;
 using notifyme.infrastructure.Identity;
@@ -41,7 +42,10 @@ namespace notifyme.server
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddMudServices();
+            services.AddMudServices(config =>
+            {
+                config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomCenter;
+            });
             services.AddRouting();
             services.AddDbContextFactory<NotifyMeContext>(opt => opt.UseSqlite(Configuration.GetConnectionString("NotifyMeDB")));
             services.AddScoped(p => p.GetRequiredService<IDbContextFactory<NotifyMeContext>>().CreateDbContext());
@@ -53,8 +57,8 @@ namespace notifyme.server
             services.AddScoped<ICronExpressionBuilder, CronExpressionBuilder>();
             services.AddScoped<IDateTimeProvider, DateTimeProvider>();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<AppUser>>();
-            services.AddSingleton<WeatherForecastService>();
             services.AddScoped<CreateQuickNotificationViewModel>();
+            services.AddScoped<CreateCalendarNotificationViewModel>();
             services.AddScoped<ManageUserDataViewModel>();
             services.AddScoped<RegisterNotificationSubscriptionViewModel>();
             services.AddTransient<IPushNotificationSubscriberService, PushNotificationSubscriberService>();

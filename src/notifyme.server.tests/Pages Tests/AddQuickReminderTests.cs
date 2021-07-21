@@ -1,13 +1,9 @@
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Bunit;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using notifyme.scheduler.Services;
 using notifyme.server.Pages;
 using notifyme.server.tests.Extensions;
-using notifyme.shared.Models.DataStore_Models;
 using notifyme.shared.RepositoryInterfaces;
 using notifyme.shared.ServiceInterfaces;
 using notifyme.shared.ViewModels;

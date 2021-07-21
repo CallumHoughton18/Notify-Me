@@ -32,12 +32,17 @@ namespace notifyme.shared.ViewModels.CreateNotification
         }
 
         protected abstract Task<Notification> NotificationGenerator();
+        protected abstract void ResetState();
 
-        public async Task SaveNotification()
+        public async Task<bool> SaveNotification()
         {
             var notificationToSave = await NotificationGenerator();
-            await _notificationRepository.AddOrUpdateAsync(notificationToSave);
+            var notif = await _notificationRepository.AddOrUpdateAsync(notificationToSave);
+            if (notif == null) return false;
+
             await _notificationScheduler.ScheduleNotificationAsync(notificationToSave);
+            ResetState();
+            return true;
         }
 
         public override async Task InitializeAsync()
