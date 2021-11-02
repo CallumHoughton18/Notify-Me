@@ -4,13 +4,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Moq;
 using notifyme.scheduler.Services;
-using notifyme.server.tests.TestData;
+using notifyme.server.tests.Test_Data;
 using notifyme.shared;
+using notifyme.shared.Models;
 using notifyme.shared.Models.DataStore_Models;
-using notifyme.shared.ViewModels.CreateNotification;
+using notifyme.shared.ViewModels.Create_Notification;
 using Xunit;
 
-namespace notifyme.server.tests.ViewModelTests.CreateNotificationTests
+namespace notifyme.server.tests.ViewModel_Tests.Create_Notification_Tests
 {
     public class CreateCalendarNotificationViewModelTests : BaseCreateNotificationTests
     {
@@ -52,7 +53,7 @@ namespace notifyme.server.tests.ViewModelTests.CreateNotificationTests
         public async Task Should_Not_Save_Notification_With_Invalid_Values(CalendarNotification calendarNotification)
         {
             var (pushSubMock, notificationSchedulerMock, savedNotifRepoMock, authServiceMock, dateTimeMock) =
-                CreateSutDependencies(x => { });
+                CreateSutDependencies(_ => { });
 
             var sut = new CreateCalendarNotificationViewModel(pushSubMock.Object, notificationSchedulerMock.Object,
                 new CronExpressionBuilder(), savedNotifRepoMock.Object, authServiceMock.Object, dateTimeMock.Object)

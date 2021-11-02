@@ -2,13 +2,13 @@
 @using Microsoft.AspNetCore.Identity
 @using notifyme.infrastructure.Identity
 @attribute [IgnoreAntiforgeryToken]
-@inject SignInManager<AppUser> SignInManager
+@inject SignInManager<AppUser> _signInManager
 @functions {
     public async Task<IActionResult> OnPost()
     {
-        if (SignInManager.IsSignedIn(User))
+        if (_signInManager.IsSignedIn(User))
         {
-            await SignInManager.SignOutAsync();
+            await _signInManager.SignOutAsync();
         }
 
         return Redirect("~/");

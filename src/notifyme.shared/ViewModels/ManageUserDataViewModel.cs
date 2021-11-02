@@ -1,12 +1,10 @@
-using System;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using notifyme.shared.Helpers;
 using notifyme.shared.Models;
 using notifyme.shared.Models.DataStore_Models;
-using notifyme.shared.RepositoryInterfaces;
-using notifyme.shared.ServiceInterfaces;
+using notifyme.shared.Repository_Interfaces;
+using notifyme.shared.Service_Interfaces;
 
 namespace notifyme.shared.ViewModels
 {

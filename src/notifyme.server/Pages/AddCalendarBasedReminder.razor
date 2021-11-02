@@ -1,13 +1,13 @@
 @page "/addcalendarreminder"
 
 @using notifyme.server.Shared.Manage_Notifications
-@using notifyme.shared.ViewModels.CreateNotification
 @using notifyme.server.Components
+@using notifyme.shared.ViewModels.Create_Notification
 
 @inject CreateCalendarNotificationViewModel  _createCalendarNotifVm;
-@inherits BaseMVVMComponent
-@inject IDialogService DialogService
-@inject ISnackbar Snackbar
+@inherits BaseMvvmComponent
+@inject IDialogService _dialogService
+@inject ISnackbar _snackbar
 
 <div style="width: 100%">
     <MudPaper Class="pa-8 mt-5">
@@ -27,7 +27,7 @@
         var savedNotification = await _createCalendarNotifVm.SaveNotification();
         if (savedNotification)
         {
-            Snackbar.Add("Notification Saved", Severity.Success, (config) => { config.CloseAfterNavigation = true; });
+            _snackbar.Add("Notification Saved", Severity.Success, (config) => { config.CloseAfterNavigation = true; });
         }
 
     }

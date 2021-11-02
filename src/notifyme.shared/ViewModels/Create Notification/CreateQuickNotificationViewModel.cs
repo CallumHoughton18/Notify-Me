@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using notifyme.shared.Helpers;
-using notifyme.shared.RepositoryInterfaces;
-using notifyme.shared.ServiceInterfaces;
 using notifyme.shared.Models;
 using notifyme.shared.Models.DataStore_Models;
+using notifyme.shared.Repository_Interfaces;
+using notifyme.shared.Service_Interfaces;
 
-namespace notifyme.shared.ViewModels.CreateNotification
+namespace notifyme.shared.ViewModels.Create_Notification
 {
     public class CreateQuickNotificationViewModel : BaseCreateNotificationViewModel
     {

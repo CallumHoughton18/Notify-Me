@@ -1,10 +1,9 @@
 using System.Threading.Tasks;
 using notifyme.shared.Models.DataStore_Models;
-using notifyme.shared.RepositoryInterfaces;
-using notifyme.shared.ServiceInterfaces;
-using notifyme.shared.ViewModels;
+using notifyme.shared.Repository_Interfaces;
+using notifyme.shared.Service_Interfaces;
 
-namespace notifyme.shared.ViewModels.CreateNotification
+namespace notifyme.shared.ViewModels.Create_Notification
 {
     public abstract class BaseCreateNotificationViewModel : BaseViewModel
     {

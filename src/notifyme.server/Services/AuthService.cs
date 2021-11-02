@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Authorization;
 using notifyme.shared.Models;
-using notifyme.shared.ServiceInterfaces;
+using notifyme.shared.Service_Interfaces;
 
 namespace notifyme.server.Services
 {

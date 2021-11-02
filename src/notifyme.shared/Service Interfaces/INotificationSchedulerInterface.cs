@@ -1,9 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using notifyme.shared.Models;
+﻿using System.Threading.Tasks;
 using notifyme.shared.Models.DataStore_Models;
 
-namespace notifyme.shared.ServiceInterfaces
+namespace notifyme.shared.Service_Interfaces
 {
     public interface INotificationSchedulerInterface
     {

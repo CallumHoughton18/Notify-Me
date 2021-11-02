@@ -1,6 +1,6 @@
 using System;
 
-namespace notifyme.shared.ServiceInterfaces
+namespace notifyme.shared.Service_Interfaces
 {
     public interface IDateTimeProvider
     {

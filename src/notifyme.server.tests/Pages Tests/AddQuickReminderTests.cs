@@ -4,10 +4,10 @@ using Moq;
 using notifyme.scheduler.Services;
 using notifyme.server.Pages;
 using notifyme.server.tests.Extensions;
-using notifyme.shared.RepositoryInterfaces;
-using notifyme.shared.ServiceInterfaces;
+using notifyme.shared.Repository_Interfaces;
+using notifyme.shared.Service_Interfaces;
 using notifyme.shared.ViewModels;
-using notifyme.shared.ViewModels.CreateNotification;
+using notifyme.shared.ViewModels.Create_Notification;
 using Xunit;
 
 namespace notifyme.server.tests.Pages_Tests

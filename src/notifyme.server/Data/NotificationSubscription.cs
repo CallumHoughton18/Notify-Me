@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace notifyme.server.Data
+﻿namespace notifyme.server.Data
 {
     public class NotificationSubscription
     {

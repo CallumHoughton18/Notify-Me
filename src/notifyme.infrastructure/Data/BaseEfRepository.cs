@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using notifyme.shared.Models;
 using notifyme.shared.Models.DataStore_Models;
-using notifyme.shared.RepositoryInterfaces;
+using notifyme.shared.Repository_Interfaces;
 
 namespace notifyme.infrastructure.Data
 {
     public class BaseEfRepository<T> : IAsyncRepository<T> where T : BaseEntity
     {
         protected readonly IDbContextFactory<NotifyMeContext> _dbContextFactory;
-        private readonly NotifyMeContext context;
 
         public BaseEfRepository(IDbContextFactory<NotifyMeContext> dbContextFactory)
         {
             _dbContextFactory = dbContextFactory;
-            context = _dbContextFactory.CreateDbContext();
+            _dbContextFactory.CreateDbContext();
         }
 
         public async Task<T> AddAsync(T entity, CancellationToken cancellationToken = default)

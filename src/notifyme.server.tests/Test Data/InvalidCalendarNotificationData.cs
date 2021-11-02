@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using notifyme.shared.Models;
 using Xunit;
 
-namespace notifyme.server.tests.TestData
+namespace notifyme.server.tests.Test_Data
 {
     public class InvalidCalendarNotificationData : TheoryData<CalendarNotification>
     {

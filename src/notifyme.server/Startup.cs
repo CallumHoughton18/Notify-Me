@@ -15,14 +15,13 @@ using notifyme.scheduler;
 using notifyme.scheduler.Jobs;
 using notifyme.scheduler.Services;
 using notifyme.server.Areas.Identity;
-using notifyme.server.Data;
 using notifyme.server.Services;
 using notifyme.shared.Models;
-using notifyme.shared.RepositoryInterfaces;
+using notifyme.shared.Repository_Interfaces;
 using notifyme.shared.Service_Implementations;
-using notifyme.shared.ServiceInterfaces;
+using notifyme.shared.Service_Interfaces;
 using notifyme.shared.ViewModels;
-using notifyme.shared.ViewModels.CreateNotification;
+using notifyme.shared.ViewModels.Create_Notification;
 using Quartz;
 
 namespace notifyme.server
@@ -67,7 +66,7 @@ namespace notifyme.server
             ConfigureJobScheduler(services);
 
             var vapidDetails = Configuration.GetSection("VAPID");
-            services.AddScoped<VapidDetails>((_) => new VapidDetails(
+            services.AddScoped((_) => new VapidDetails(
                 vapidDetails["publicKey"], 
                 vapidDetails["privateKey"],
                 vapidDetails["subject"]));

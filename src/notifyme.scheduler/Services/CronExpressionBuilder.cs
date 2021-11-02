@@ -1,8 +1,7 @@
 using System;
 using notifyme.scheduler.Converters;
 using notifyme.shared;
-using notifyme.shared.ServiceInterfaces;
-using Quartz;
+using notifyme.shared.Service_Interfaces;
 
 namespace notifyme.scheduler.Services
 {

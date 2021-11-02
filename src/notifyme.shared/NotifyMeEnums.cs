@@ -1,5 +1,3 @@
-using System;
-
 namespace notifyme.shared
 {
     public static class NotifyMeEnums

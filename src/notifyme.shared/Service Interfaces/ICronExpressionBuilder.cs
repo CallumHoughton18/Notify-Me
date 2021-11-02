@@ -1,7 +1,7 @@
 using System;
 using static notifyme.shared.NotifyMeEnums;
 
-namespace notifyme.shared.ServiceInterfaces
+namespace notifyme.shared.Service_Interfaces
 {
     public interface ICronExpressionBuilder
     {

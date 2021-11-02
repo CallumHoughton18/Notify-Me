@@ -1,5 +1,5 @@
 using System;
-using notifyme.shared.ServiceInterfaces;
+using notifyme.shared.Service_Interfaces;
 
 namespace notifyme.shared.Service_Implementations
 {

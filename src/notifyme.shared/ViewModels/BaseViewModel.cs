@@ -15,7 +15,7 @@ namespace notifyme.shared.ViewModels
             set => SetValue(ref _isLoading, value);
         }
 
-        private bool _isInitialized = false;
+        private bool _isInitialized;
         public bool IsInitialized
         {
             get => _isInitialized;

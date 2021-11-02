@@ -1,10 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using notifyme.scheduler.Jobs;
-using notifyme.scheduler.Services;
-using notifyme.shared.Models;
 using notifyme.shared.Models.DataStore_Models;
-using notifyme.shared.ServiceInterfaces;
+using notifyme.shared.Service_Interfaces;
 using Quartz;
 
 namespace notifyme.scheduler

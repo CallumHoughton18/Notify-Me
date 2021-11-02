@@ -6,7 +6,7 @@ using notifyme.shared.ViewModels;
 
 namespace notifyme.server.Components
 {
-    public class BaseMVVMComponent : ComponentBase, IDisposable, IAsyncDisposable
+    public class BaseMvvmComponent : ComponentBase, IDisposable, IAsyncDisposable
     {
         private BaseViewModel _vm;
         

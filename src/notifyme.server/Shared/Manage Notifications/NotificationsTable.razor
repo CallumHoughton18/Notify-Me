@@ -29,7 +29,7 @@
 
 @code {
     private bool _hover = true;
-    private Notification backupPrevNotif = null;
+    private Notification _backupPrevNotif = null;
 
     [Parameter]
     public IEnumerable<Notification> Notifications { get; set; }
@@ -53,7 +53,7 @@
     {
         if (notification is not Notification prevNotification) return;
 
-        backupPrevNotif = new Notification()
+        _backupPrevNotif = new Notification()
         {
             NotificationTitle = prevNotification.NotificationTitle,
             NotificationBody = prevNotification.NotificationBody
@@ -64,8 +64,8 @@
     {
         if (notification is not Notification prevNotification) return;
 
-        prevNotification.NotificationTitle = backupPrevNotif.NotificationTitle;
-        prevNotification.NotificationBody = backupPrevNotif.NotificationBody;
+        prevNotification.NotificationTitle = _backupPrevNotif.NotificationTitle;
+        prevNotification.NotificationBody = _backupPrevNotif.NotificationBody;
     }
 
     private void ItemHasBeenCommitted(object notification)

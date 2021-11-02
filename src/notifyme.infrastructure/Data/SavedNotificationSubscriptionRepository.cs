@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using notifyme.shared.Models;
 using notifyme.shared.Models.DataStore_Models;
-using notifyme.shared.RepositoryInterfaces;
+using notifyme.shared.Repository_Interfaces;
 
 namespace notifyme.infrastructure.Data
 {

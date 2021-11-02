@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using notifyme.shared.Models;
-using notifyme.shared.RepositoryInterfaces;
-using notifyme.shared.ServiceInterfaces;
+using notifyme.shared.Repository_Interfaces;
+using notifyme.shared.Service_Interfaces;
 using Quartz;
 
 namespace notifyme.scheduler.Jobs

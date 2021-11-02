@@ -1,5 +1,5 @@
 using Moq;
-using notifyme.shared.ServiceInterfaces;
+using notifyme.shared.Service_Interfaces;
 
 namespace notifyme.server.tests.Mocks
 {

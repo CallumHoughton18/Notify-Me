@@ -3,7 +3,7 @@
 @inherits LayoutComponentBase
 @inject RegisterNotificationSubscriptionViewModel _subToNotifVm;
 
-<MudThemeProvider Theme="NeutralBlueTheme" />
+<MudThemeProvider Theme="_neutralBlueTheme" />
 <MudLayout>
     <AppBar OnDrawButtonClick="DrawerToggle"></AppBar>
     <AuthorizeView>
@@ -26,9 +26,9 @@
 </MudLayout>
 
 @code {
-    public bool _drawerOpen = false;
+    private bool _drawerOpen;
 
-    MudTheme NeutralBlueTheme = new MudTheme()
+    readonly MudTheme _neutralBlueTheme = new()
     {
         Palette = new Palette()
         {

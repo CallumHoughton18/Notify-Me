@@ -1,14 +1,14 @@
 ﻿@page "/"
-@using notifyme.shared.ViewModels.CreateNotification
 @using notifyme.shared.ViewModels
 @using notifyme.server.Components
 @using notifyme.server.Shared.Manage_Notifications
 @using notifyme.server.Shared.Manage_Subscriptions
+@using notifyme.shared.ViewModels.Create_Notification
 @inject CreateQuickNotificationViewModel  _createNotifVm;
 @inject RegisterNotificationSubscriptionViewModel _subToNotifVm;
-@inherits BaseMVVMComponent
-@inject IDialogService DialogService
-@inject ISnackbar Snackbar
+@inherits BaseMvvmComponent
+@inject IDialogService _dialogService
+@inject ISnackbar _snackbar
 
 <div style="width: 100%">
     <MudPaper Class="pa-8 mt-5">
@@ -30,7 +30,7 @@
         var savedNotification = await _createNotifVm.SaveNotification();
         if (savedNotification)
         {
-            Snackbar.Add("Notification Saved", Severity.Success, (config) => { config.CloseAfterNavigation = true; });
+            _snackbar.Add("Notification Saved", Severity.Success, (config) => { config.CloseAfterNavigation = true; });
         }
     }
 }

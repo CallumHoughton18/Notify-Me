@@ -1,8 +1,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using notifyme.shared.Models.DataStore_Models;
-using notifyme.shared.RepositoryInterfaces;
-using notifyme.shared.ServiceInterfaces;
+using notifyme.shared.Repository_Interfaces;
+using notifyme.shared.Service_Interfaces;
 
 namespace notifyme.shared.ViewModels
 {
@@ -23,7 +23,7 @@ namespace notifyme.shared.ViewModels
             _authService = authService;
         }
 
-        private bool _isDeviceRegistered = false;
+        private bool _isDeviceRegistered;
         public bool IsDeviceRegistered
         {
             get => _isDeviceRegistered;
@@ -49,7 +49,7 @@ namespace notifyme.shared.ViewModels
             var currentSub = await _pushNotificationSubscriberService.GetCurrentUserAndDeviceSubscription();
             if (currentSub is null) return false;
             var userSubs = await _subscriptionRepository.GetByUserName(userName);
-            return userSubs.FirstOrDefault(x => x.P256HKey == currentSub.P256hKey) != null;
+            return userSubs.FirstOrDefault(x => x.P256HKey == currentSub.P256HKey) != null;
         }
 
         private async Task SetIsDeviceRegistered()
@@ -75,7 +75,7 @@ namespace notifyme.shared.ViewModels
                 UserName = currentUser.UserName,
                 AuthKey = currentSub.AuthKey,
                 EndPoint = currentSub.EndPoint,
-                P256HKey = currentSub.P256hKey,
+                P256HKey = currentSub.P256HKey,
                 DeviceName =  friendlySubscriptionName
             };
             

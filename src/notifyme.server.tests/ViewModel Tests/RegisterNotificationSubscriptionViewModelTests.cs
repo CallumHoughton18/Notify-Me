@@ -14,7 +14,7 @@ namespace notifyme.server.tests.ViewModel_Tests
     public class RegisterNotificationSubscriptionViewModelTests
     {
         private readonly NotificationSubscription _notificationSubscriptionStub = new()
-            {EndPoint = "testEndPoint", AuthKey = "testAuthKey", P256hKey = "testKey"};
+            {EndPoint = "testEndPoint", AuthKey = "testAuthKey", P256HKey = "testKey"};
 
         private readonly string MockUserName = "Admin";
 
@@ -71,7 +71,7 @@ namespace notifyme.server.tests.ViewModel_Tests
         public async Task Should_Set_To_Registered_On_Initialization()
         {
             var (pushSubMock, savedNotifRepoMock, authServiceMock) =
-                CreateDependencyMocks(x => { });
+                CreateDependencyMocks(_ => { });
 
             savedNotifRepoMock.MockGetByUserName(MockUserName, new List<SavedNotificationSubscription>()
             {
@@ -80,7 +80,7 @@ namespace notifyme.server.tests.ViewModel_Tests
                     AuthKey = "TestKey",
                     DeviceName = "TestDevice",
                     EndPoint = "TestEndPoint",
-                    P256HKey = _notificationSubscriptionStub.P256hKey,
+                    P256HKey = _notificationSubscriptionStub.P256HKey,
                     UserName = MockUserName
                 }
             });
@@ -96,7 +96,7 @@ namespace notifyme.server.tests.ViewModel_Tests
         public async Task Should_Set_To_Not_Registered_On_Initialization_With_Other_Subscriptions()
         {
             var (pushSubMock, savedNotifRepoMock, authServiceMock) =
-                CreateDependencyMocks(x => { });
+                CreateDependencyMocks(_ => { });
 
             savedNotifRepoMock.MockGetByUserName(MockUserName, new List<SavedNotificationSubscription>()
             {
@@ -121,7 +121,7 @@ namespace notifyme.server.tests.ViewModel_Tests
         public async Task Should_Set_To_Not_Registered_On_Initialization_With_Empty_List()
         {
             var (pushSubMock, savedNotifRepoMock, authServiceMock) =
-                CreateDependencyMocks(x => { });
+                CreateDependencyMocks(_ => { });
 
             savedNotifRepoMock.MockGetByUserName(MockUserName, new List<SavedNotificationSubscription>());
             var sut = new RegisterNotificationSubscriptionViewModel(pushSubMock.Object, savedNotifRepoMock.Object,

@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
-namespace notifyme.shared.Models
+﻿namespace notifyme.shared.Models
 {
     public class User
     {
@@ -9,6 +6,6 @@ namespace notifyme.shared.Models
         {
             UserName = userName;
         }
-        public string UserName { get; private set; }
+        public string UserName { get; }
     }
 }

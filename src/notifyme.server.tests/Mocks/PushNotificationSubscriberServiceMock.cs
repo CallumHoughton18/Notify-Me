@@ -1,8 +1,6 @@
-using System;
-using System.Threading.Tasks;
 using Moq;
 using notifyme.shared.Models;
-using notifyme.shared.ServiceInterfaces;
+using notifyme.shared.Service_Interfaces;
 
 namespace notifyme.server.tests.Mocks
 {

@@ -1,5 +1,3 @@
-using notifyme.server.Data;
-using notifyme.shared.Models;
 using notifyme.shared.Models.DataStore_Models;
 using WebPush;
 using SharedVapidDetails = notifyme.shared.Models.VapidDetails;

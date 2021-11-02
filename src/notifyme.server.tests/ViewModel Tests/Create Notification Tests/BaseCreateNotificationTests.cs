@@ -1,21 +1,16 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Moq;
-using notifyme.scheduler.Services;
-using notifyme.server.Data;
 using notifyme.server.tests.Mocks;
-using notifyme.shared;
 using notifyme.shared.Models;
 using notifyme.shared.Models.DataStore_Models;
-using notifyme.shared.ServiceInterfaces;
-using Xunit;
+using notifyme.shared.Service_Interfaces;
 
-namespace notifyme.server.tests.ViewModelTests.CreateNotificationTests
+namespace notifyme.server.tests.ViewModel_Tests.Create_Notification_Tests
 {
     public abstract class BaseCreateNotificationTests
     {
-       protected readonly shared.Models.NotificationSubscription _notificationSubscriptionStub = new()
-        { EndPoint = "testEndPoint", AuthKey = "testAuthKey", P256hKey = "testKey" };
+       protected readonly NotificationSubscription _notificationSubscriptionStub = new()
+        { EndPoint = "testEndPoint", AuthKey = "testAuthKey", P256HKey = "testKey" };
 
         protected const string MockUserName = "Admin";
         protected const string MockNotificationTitle = "NotificationTitle";

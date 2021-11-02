@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Moq;
 using notifyme.shared.Models.DataStore_Models;
-using notifyme.shared.RepositoryInterfaces;
+using notifyme.shared.Repository_Interfaces;
 
 namespace notifyme.server.tests.Mocks
 {
@@ -13,7 +13,7 @@ namespace notifyme.server.tests.Mocks
         {
             Setup(x =>
                     x.AddOrUpdateAsync(It.IsAny<SavedNotificationSubscription>(), It.IsAny<CancellationToken>()))
-                .Callback<SavedNotificationSubscription, CancellationToken>((x, y) => callback(x));
+                .Callback<SavedNotificationSubscription, CancellationToken>((x, _) => callback(x));
             return this;
         }
 

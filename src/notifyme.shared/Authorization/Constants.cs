@@ -4,7 +4,7 @@ namespace notifyme.shared.Authorization
     {
         public static class Roles
         {
-            public const string ADMINISTRATORS = "Administrators";
+            public const string Administrators = "Administrators";
         }
     }
 }

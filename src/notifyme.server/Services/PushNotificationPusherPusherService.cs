@@ -1,8 +1,7 @@
 using System;
 using System.Text.Json;
-using notifyme.shared.Models;
 using notifyme.shared.Models.DataStore_Models;
-using notifyme.shared.ServiceInterfaces;
+using notifyme.shared.Service_Interfaces;
 using WebPush;
 using VapidDetails = notifyme.shared.Models.VapidDetails;
 
