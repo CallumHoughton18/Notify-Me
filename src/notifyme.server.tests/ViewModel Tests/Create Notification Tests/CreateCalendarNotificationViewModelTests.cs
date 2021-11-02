@@ -17,13 +17,14 @@ namespace notifyme.server.tests.ViewModelTests.CreateNotificationTests
         [Theory]
         [InlineData(NotifyMeEnums.CalendarNotificationRepeatFormat.None, false, "16 15 14 2 1 ?")]
         [InlineData(NotifyMeEnums.CalendarNotificationRepeatFormat.Weekly, true, "0 15 14 ? * FRI")]
-        [InlineData(NotifyMeEnums.CalendarNotificationRepeatFormat.Monthly, true, "0 15 14 1 * ?")]
+        [InlineData(NotifyMeEnums.CalendarNotificationRepeatFormat.Monthly, true, "0 15 14 2 * ?")]
         [InlineData(NotifyMeEnums.CalendarNotificationRepeatFormat.Yearly, true, "16 15 14 2 1 ? *")]
         public async Task Should_Save_New_Correct_Notification(
             NotifyMeEnums.CalendarNotificationRepeatFormat format,
             bool expectedRepeatable,
             string expectedCron)
         {
+            
             Notification savedNotification = null;
 
             var (pushSubMock, notificationSchedulerMock, savedNotifRepoMock, authServiceMock, dateTimeMock) =

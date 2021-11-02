@@ -57,6 +57,7 @@ namespace notifyme.scheduler.Converters
 
         public static string MonthlyOnDayAndHourAndMinute(int dayOfMonth, int hour, int minute)
         {
+            // dayOfMonth being passed in as the MONTH not the day currently
             DateBuilder.ValidateDayOfMonth(dayOfMonth);
             DateBuilder.ValidateHour(hour);
             DateBuilder.ValidateMinute(minute);

@@ -16,25 +16,17 @@ namespace notifyme.scheduler.Services
 
         public string RepeatableDateTimeToCronExpression(DateTime dateTime, NotifyMeEnums.CalendarNotificationRepeatFormat repeatFormat)
         {
-            string cronExp = null;
-            switch (repeatFormat)
+            var cronExp = repeatFormat switch
             {
-                case NotifyMeEnums.CalendarNotificationRepeatFormat.None:
-                    cronExp = ToCronExpression.FromDateTime(dateTime);
-                    break;
-                case NotifyMeEnums.CalendarNotificationRepeatFormat.Weekly:
-                    cronExp = ToCronExpression.WeeklyOnDayAndHourAndMinute(dateTime.DayOfWeek, dateTime.Hour, dateTime.Minute).ToString();
-                    break;
-                case NotifyMeEnums.CalendarNotificationRepeatFormat.Monthly:
-                    cronExp = ToCronExpression.MonthlyOnDayAndHourAndMinute(dateTime.Month, dateTime.Hour, dateTime.Minute).ToString();
-                    break;
-                case NotifyMeEnums.CalendarNotificationRepeatFormat.Yearly:
-                    cronExp = $"{dateTime.Second} {dateTime.Minute} {dateTime.Hour} {dateTime.Day} {dateTime.Month} ? *";
-                    break;
-                default:
-                    break;
-            }
-
+                NotifyMeEnums.CalendarNotificationRepeatFormat.None => ToCronExpression.FromDateTime(dateTime),
+                NotifyMeEnums.CalendarNotificationRepeatFormat.Weekly => ToCronExpression.WeeklyOnDayAndHourAndMinute(
+                    dateTime.DayOfWeek, dateTime.Hour, dateTime.Minute),
+                NotifyMeEnums.CalendarNotificationRepeatFormat.Monthly => ToCronExpression.MonthlyOnDayAndHourAndMinute(
+                    dateTime.Day, dateTime.Hour, dateTime.Minute),
+                NotifyMeEnums.CalendarNotificationRepeatFormat.Yearly =>
+                    $"{dateTime.Second} {dateTime.Minute} {dateTime.Hour} {dateTime.Day} {dateTime.Month} ? *",
+                _ => null
+            };
             return cronExp;
         }
     }
