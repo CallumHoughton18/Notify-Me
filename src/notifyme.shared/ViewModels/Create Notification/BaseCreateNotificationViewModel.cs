@@ -12,7 +12,7 @@ namespace notifyme.shared.ViewModels.Create_Notification
         protected readonly ICronExpressionBuilder _cronExpressionBuilder;
         protected readonly INotificationRepository _notificationRepository;
         protected readonly IAuthService _authService;
-        protected readonly IDateTimeProvider _dateTimeProvider;
+        protected readonly IServerDateTimeProvider _serverServerDateTimeProvider;
 
         public BaseCreateNotificationViewModel(
             IPushNotificationSubscriberService pushNotificationSubscriberService,
@@ -20,14 +20,14 @@ namespace notifyme.shared.ViewModels.Create_Notification
             ICronExpressionBuilder cronExpressionBuilder,
             INotificationRepository notificationRepository,
             IAuthService authService,
-            IDateTimeProvider dateTimeProvider)
+            IServerDateTimeProvider serverServerDateTimeProvider)
         {
             _pushNotificationSubscriberService = pushNotificationSubscriberService;
             _notificationScheduler = notificationScheduler;
             _cronExpressionBuilder = cronExpressionBuilder;
             _notificationRepository = notificationRepository;
             _authService = authService;
-            _dateTimeProvider = dateTimeProvider;
+            _serverServerDateTimeProvider = serverServerDateTimeProvider;
         }
 
         protected abstract Task<Notification> NotificationGenerator();

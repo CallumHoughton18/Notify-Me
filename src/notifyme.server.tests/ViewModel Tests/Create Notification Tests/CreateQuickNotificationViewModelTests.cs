@@ -24,7 +24,7 @@ namespace notifyme.server.tests.ViewModel_Tests.Create_Notification_Tests
             Notification savedNotification = null;
 
             var (pushSubMock, notificationSchedulerMock, savedNotifRepoMock, authServiceMock, dateTimeMock) =
-                CreateSutDependencies(x => savedNotification = x);
+                CreateBaseSutDependencies(x => savedNotification = x);
 
             var sut = new CreateQuickNotificationViewModel(pushSubMock.Object, notificationSchedulerMock.Object,
                 new CronExpressionBuilder(), savedNotifRepoMock.Object, authServiceMock.Object, dateTimeMock.Object);
@@ -47,7 +47,7 @@ namespace notifyme.server.tests.ViewModel_Tests.Create_Notification_Tests
         public async Task Should_Not_Save_Notification_With_Invalid_Values(QuickNotification invalidNotification)
         {
             var (pushSubMock, notificationSchedulerMock, savedNotifRepoMock, authServiceMock, dateTimeMock) =
-                CreateSutDependencies(_ => { });
+                CreateBaseSutDependencies(_ => { });
 
             var sut = new CreateQuickNotificationViewModel(pushSubMock.Object, notificationSchedulerMock.Object,
                 new CronExpressionBuilder(), savedNotifRepoMock.Object, authServiceMock.Object, dateTimeMock.Object)

@@ -74,4 +74,7 @@
     <_ContentIncludedByDefault Remove="wwwroot\css\bootstrap\bootstrap.min.css" />
     <_ContentIncludedByDefault Remove="wwwroot\css\bootstrap\bootstrap.min.css.map" />
   </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\ClientDateTime.ts" />
+  </ItemGroup>
 </Project>

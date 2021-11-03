@@ -15,10 +15,10 @@ namespace notifyme.server.tests.ViewModel_Tests.Create_Notification_Tests
         protected const string MockUserName = "Admin";
         protected const string MockNotificationTitle = "NotificationTitle";
         protected const string MockNotificationBody = "Notificationbody";
-        protected readonly DateTime _mockCurrentDateTime = new(2021, 1, 1, 12, 1, 1);
+        protected readonly DateTime _mockServerCurrentDateTime = new(2021, 1, 1, 12, 1, 1);
 
         protected (PushNotificationSubscriberServiceMock, NotificationSchedulerMock, NotificationRepositoryMock,
-            AuthServiceMock, Mock<IDateTimeProvider>) CreateSutDependencies(
+            AuthServiceMock, Mock<IServerDateTimeProvider>) CreateBaseSutDependencies(
                 Action<Notification> savedNotificationCallback)
         {
             var pushSubMock =
@@ -28,10 +28,10 @@ namespace notifyme.server.tests.ViewModel_Tests.Create_Notification_Tests
             var savedNotifRepoMock =
                 new NotificationRepositoryMock().MockAddOrUpdate(savedNotificationCallback);
             var authServiceMock = new AuthServiceMock().MockGetCurrentUser(new User(MockUserName));
-            var mockDateTimeProvider = new Mock<IDateTimeProvider>();
-            mockDateTimeProvider.SetupGet(x => x.Now).Returns(_mockCurrentDateTime);
-
-            return (pushSubMock, notificationSchedularMock, savedNotifRepoMock, authServiceMock, mockDateTimeProvider);
+            var mockServerDateTimeProvider = new Mock<IServerDateTimeProvider>();
+            mockServerDateTimeProvider.SetupGet(x => x.Now).Returns(_mockServerCurrentDateTime);
+            
+            return (pushSubMock, notificationSchedularMock, savedNotifRepoMock, authServiceMock, mockServerDateTimeProvider);
         }
     }
 }

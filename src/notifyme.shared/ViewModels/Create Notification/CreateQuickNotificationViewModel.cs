@@ -17,13 +17,13 @@ namespace notifyme.shared.ViewModels.Create_Notification
             ICronExpressionBuilder cronExpressionBuilder,
             INotificationRepository notificationRepository,
             IAuthService authService,
-            IDateTimeProvider dateTimeProvider) :
+            IServerDateTimeProvider serverServerDateTimeProvider) :
             base(pushNotificationSubscriberService,
                 notificationScheduler,
                 cronExpressionBuilder,
                 notificationRepository,
                 authService,
-                dateTimeProvider)
+                serverServerDateTimeProvider)
         {
         }
 
@@ -40,7 +40,7 @@ namespace notifyme.shared.ViewModels.Create_Notification
             if (!isValid.ReturnBool) throw new ValidationException(isValid.ReturnString);
 
             var currentUser = await _authService.GetCurrentUserAsync();
-            var currentDateTime = _dateTimeProvider.Now;
+            var currentDateTime = _serverServerDateTimeProvider.Now;
             var shouldFireAt = QuickNotification.TimeFormat switch
             {
                 NotifyMeEnums.QuickNotificationTimeFormat.Minutes => currentDateTime.AddMinutes(QuickNotification.RequestedTime),

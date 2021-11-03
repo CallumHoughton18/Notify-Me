@@ -54,7 +54,8 @@ namespace notifyme.server
                 .AddDefaultTokenProviders();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ICronExpressionBuilder, CronExpressionBuilder>();
-            services.AddScoped<IDateTimeProvider, DateTimeProvider>();
+            services.AddScoped<IServerDateTimeProvider, ServerServerDateTimeProvider>();
+            services.AddScoped<IClientDateTimeProvider, ClientDateTimeProvider>();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<AppUser>>();
             services.AddScoped<CreateQuickNotificationViewModel>();
             services.AddScoped<CreateCalendarNotificationViewModel>();

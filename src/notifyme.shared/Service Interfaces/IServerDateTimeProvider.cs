@@ -2,8 +2,9 @@ using System;
 
 namespace notifyme.shared.Service_Interfaces
 {
-    public interface IDateTimeProvider
+    public interface IServerDateTimeProvider
     {
         DateTime Now { get; }
+        TimeZoneInfo CurrentTimeZone { get; }
     }
 }
