@@ -2,6 +2,7 @@ version: '3.4'
 
 services:
   notifymeserver:
+    restart: unless-stopped
     user: appuser
     image: callumhoughton22/notifymeserver
     ports:
