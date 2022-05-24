@@ -9,7 +9,7 @@ variables:
   ConnectionStrings.NotifyMeDB: $(notifyMeDBConn)
   Quartz.SQLiteDataSourceTemplatePath: $(quartzDbTemplatePath)
 
-steps:
+steps: 
 - task: DotNetCoreCLI@2
   displayName: 'Restore'
   inputs:
